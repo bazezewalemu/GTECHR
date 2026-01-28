@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="am" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GTECHR | የቴክኖሎጂ ማዕከል</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #00d2ff;
+            --dark: #1a1a2e;
+            --light: #f4f7f6;
+            --gray: #666;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            background: var(--light);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* የላይኛው አድራሻ (Top Bar) */
+        .top-bar {
+            background: #0f0f1e;
+            color: white;
+            padding: 5px 10%;
+            font-size: 0.85rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .top-bar a {
+            color: var(--primary);
+            text-decoration: none;
+            margin-left: 15px;
+        }
+
+        /* ሜኑ (Navigation) */
+        header {
+            background: var(--dark);
+            color: white;
+            padding: 1rem 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary);
+            text-transform: uppercase;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            margin-left: 25px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+
+        /* ዋና ምስል (Hero) */
+        .hero {
+            background: linear-gradient(rgba(26, 26, 46, 0.85), rgba(26, 26, 46, 0.85)), url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1350&q=80');
+            height: 70vh;
+            background-size: cover;
+            background-position: center;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: var(--dark);
+            padding: 12px 35px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: 0.3s;
+            border: 2px solid var(--primary);
+        }
+
+        .btn:hover {
+            background: transparent;
+            color: white;
+        }
+
+        /* አገልግሎቶች (Services) */
+        .section-title {
+            text-align: center;
+            margin: 50px 0;
+            font-size: 2.5rem;
+        }
+
+        .container {
+            padding: 0 10% 50px 10%;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+        }
+
+        .card i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        /* የእግርጌ (Footer) */
+        footer {
+            background: var(--dark);
+            color: #bbb;
+            padding: 60px 10% 20px 10%;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h3 {
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .footer-col p,
+        .footer-col li {
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .social-links a {
+            font-size: 1.5rem;
+            color: white;
+            margin-right: 15px;
+            transition: 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--primary);
+        }
+
+        .copy {
+            text-align: center;
+            border-top: 1px solid #333;
+            padding-top: 20px;
+            font-size: 0.8rem;
+        }
+
+        /* ለስልክ ተስማሚ እንዲሆን (Responsive) */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+            }
+
+            nav ul {
+                margin-top: 20px;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="top-bar">
+        <div>
+            <i class="fas fa-envelope"></i> infotech2026@gmail.com |
+            <i class="fas fa-phone"></i> +251 918032772
+        </div>
+        <div>
+            <a href="#">መግቢያ (Login)</a>
+            <a href="#">ይመዝገቡ</a>
+        </div>
+    </div>
+
+    <header>
+        <div class="logo">GTECHR</div>
+        <nav>
+            <ul>
+                <li><a href="#">መነሻ</a></li>
+                <li><a href="#services">አገልግሎቶች</a></li>
+                <li><a href="#">ዜናዎች</a></li>
+                <li><a href="#">ስለ እኛ</a></li>
+                <li><a href="#contact">ያግኙን</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>ለቴክኖሎጂ አዲስ እይታ</h1>
+        <p>GTECHR በኢትዮጵያ የቴክኖሎጂ ዘርፍ ላይ ጥልቅ ትንታኔዎችን፣ የቅርብ ጊዜ መረጃዎችን እና የፈጠራ ውጤቶችን የሚያቀርብ ግንባር ቀደም ድረ-ገጽ ነው።</p>
+        <a href="#services" class="btn">የበለጠ ይወቁ</a>
+    </section>
+
+    <div class="container" id="services">
+        <h2 class="section-title">የምንሰጣቸው አገልግሎቶች</h2>
+        <div class="grid">
+            <div class="card">
+                <i class="fas fa-laptop-code"></i>
+                <h3>የሶፍትዌር ልማት</h3>
+                <p>ለድርጅትዎ የሚመጥኑ ዘመናዊ ድረ-ገጾችን እና የሞባይል መተግበሪያዎችን እንሰራለን።</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-microchip"></i>
+                <h3>የቴክኖሎጂ ግምገማ</h3>
+                <p>አዳዲስ ስልኮችን፣ ላፕቶፖችን እና ሌሎች ኤሌክትሮኒክስ ውጤቶችን እንመረምራለን።</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-shield-alt"></i>
+                <h3>የሳይበር ደህንነት</h3>
+                <p>የመረጃዎን ደህንነት ለመጠበቅ የሚያስችሉ የቴክኖሎጂ መፍትሄዎችን እናማክራለን።</p>
+            </div>
+        </div>
+    </div>
+
+    <footer id="contact">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h3>GTECHR</h3>
+                <p>የወደፊቱን ቴክኖሎጂ ለሁሉም ተደራሽ ለማድረግ የምንሰራ የፈጠራ ቡድን ነን።</p>
+                <div class="social-links">
+                    <a href="worku.alemu.1276"><i class="fab fa-facebook"></i></a>
+                    <a href="t.me/commaint"><i class="fab fa-telegram"></i></a>
+                    <a href="bazezew-alemu"><i class="fab fa-linkedin"></i></a>
+                    <a href="@GTECHR"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>ፈጣን አገናኞች</h3>
+                <ul>
+                    <li><a href="#" style="color:#bbb; text-decoration:none;">የአጠቃቀም ደንቦች</a></li>
+                    <li><a href="#" style="color:#bbb; text-decoration:none;">የግል መረጃ ጥበቃ</a></li>
+                    <li><a href="#" style="color:#bbb; text-decoration:none;">የስራ ማስታወቂያ</a></li>
+                    <li><a href="#" style="color:#bbb; text-decoration:none;">ድጋፍ</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>አድራሻ</h3>
+                <p><i class="fas fa-map-marker-alt"></i> ጎንደር/ሁመራ ኢትዮጵያ</p>
+                <p><i class="fas fa-phone"></i> +251 918032772</p>
+                <p><i class="fas fa-envelope"></i> infotech2026@gmail.com</p>
+            </div>
+        </div>
+        <div class="copy">
+            &copy; 2026 GTECHR - በኢትዮጵያ የተገነባ። መብቱ በህግ የተጠበቀ ነው።
+        </div>
+    </footer>
+
+</body>
+
+</html>
