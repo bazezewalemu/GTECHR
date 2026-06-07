@@ -10,9 +10,15 @@
         .container{max-width:1400px;margin:0 auto;}
         .welcome-card{background:#fff;border-radius:30px;padding:40px;text-align:center;max-width:500px;margin:50px auto;box-shadow:0 20px 60px rgba(0,0,0,0.3);}
         .welcome-card h1{color:#1a56db;margin-bottom:15px;}
-        .btn{display:block;width:100%;padding:15px;margin:12px 0;border:none;border-radius:15px;font-size:1.1rem;font-weight:bold;cursor:pointer;transition:0.3s;}
+        .btn{display:inline-block;padding:12px 24px;margin:5px;border:none;border-radius:12px;font-size:0.9rem;font-weight:bold;cursor:pointer;transition:0.3s;}
+        .btn-block{display:block;width:100%;margin:12px 0;}
         .btn-admin{background:#1a56db;color:#fff;}
         .btn-exam{background:#059669;color:#fff;}
+        .btn-primary{background:#1a56db;color:#fff;}
+        .btn-success{background:#059669;color:#fff;}
+        .btn-danger{background:#dc2626;color:#fff;}
+        .btn-warning{background:#ed8936;color:#fff;}
+        .btn-secondary{background:#a0aec0;color:#fff;}
         .header{background:#fff;border-radius:20px;padding:20px;margin-bottom:25px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;}
         .tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:25px;}
         .tab{background:#fff;border:none;padding:12px 25px;border-radius:50px;cursor:pointer;font-weight:bold;transition:0.3s;}
@@ -22,17 +28,14 @@
         .form-group label{display:block;margin-bottom:8px;font-weight:bold;}
         .form-group input,.form-group select,.form-group textarea{width:100%;padding:12px;border:2px solid #e0e0e0;border-radius:12px;font-size:1rem;}
         .form-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;}
-        .btn-primary{background:#1a56db;color:#fff;}
-        .btn-success{background:#059669;color:#fff;}
-        .btn-danger{background:#dc2626;color:#fff;}
-        .btn-warning{background:#ed8936;color:#fff;}
         table{width:100%;border-collapse:collapse;}
         th,td{padding:12px;text-align:left;border-bottom:1px solid #e0e0e0;}
         th{background:#f7fafc;}
         .badge{padding:4px 12px;border-radius:20px;font-size:0.8rem;}
         .badge-success{background:#d1fae5;color:#065f46;}
         .badge-danger{background:#fee2e2;color:#991b1b;}
-        .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:20px;margin-bottom:25px;}
+        .badge-warning{background:#feebc8;color:#7b341e;}
+        .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:20px;margin-bottom:25px;}
         .stat-card{background:#fff;padding:20px;border-radius:15px;text-align:center;}
         .stat-card h2{font-size:2rem;color:#1a56db;}
         .timer{font-size:2rem;font-weight:bold;text-align:center;color:#dc2626;margin-bottom:20px;font-family:monospace;}
@@ -47,8 +50,10 @@
         .hidden{display:none;}
         .login-box{max-width:400px;margin:80px auto;background:#fff;border-radius:30px;padding:40px;box-shadow:0 20px 60px rgba(0,0,0,0.3);}
         .login-box h2{text-align:center;color:#1a56db;margin-bottom:25px;}
-        .back-btn{margin-top:15px;background:#a0aec0;}
-        @media (max-width:768px){.card{padding:18px;}.timer{font-size:1.5rem;}}
+        .search-input{width:100%;padding:10px;margin-bottom:15px;border-radius:10px;border:1px solid #ddd;}
+        .action-btns{display:flex;gap:5px;flex-wrap:wrap;}
+        .edit-mode{background:#fff3cd;border-left:4px solid #ed8936;}
+        @media (max-width:768px){.card{padding:18px;}.timer{font-size:1.5rem;}.btn{padding:8px 16px;}}
     </style>
 </head>
 <body>
@@ -58,18 +63,18 @@
         <div class="welcome-card">
             <h1>🎓 የኢንስፔክሽን መመሪያ ፈተና ስርዓት</h1>
             <p>መመሪያ ቁጥር 009/2011<br>የአማራ ክልል መንገድና ትራንስፖርት ቢሮ</p>
-            <button class="btn btn-admin" onclick="showAdminLogin()">🔑 አድሚን</button>
-            <button class="btn btn-exam" onclick="showExamLogin()">📝 ተፈታኝ</button>
+            <button class="btn btn-admin btn-block" onclick="showAdminLogin()">🔑 አድሚን</button>
+            <button class="btn btn-exam btn-block" onclick="showExamLogin()">📝 ተፈታኝ</button>
         </div>
     </div>
 
-    <!-- አድሚን ሎጂን ገጽ - ፓስዎርድ 11133 ብቻ -->
+    <!-- አድሚን ሎጂን -->
     <div id="adminLoginScreen" class="hidden">
         <div class="login-box">
             <h2>🔐 የአድሚን መግቢያ</h2>
             <div class="form-group"><label>የይለፍ ቃል</label><input type="password" id="adminPassword" placeholder="********" style="text-align:center;font-size:1.2rem;"></div>
-            <button class="btn btn-primary" onclick="adminLogin()">ግባ</button>
-            <button class="btn back-btn" onclick="goBack()">🔙 ተመለስ</button>
+            <button class="btn btn-primary btn-block" onclick="adminLogin()">ግባ</button>
+            <button class="btn btn-secondary btn-block" onclick="goBack()">🔙 ተመለስ</button>
         </div>
     </div>
 
@@ -85,168 +90,358 @@
             <button class="tab" onclick="showAdminTab('recycle',this)">🗑️ ሪሳይክል</button>
         </div>
         <div id="adminDashboardTab"><div class="stats-grid" id="statsGrid"></div><div class="card"><h3>📋 የተፈጠሩ ፈተናዎች</h3><div id="examsList"></div></div></div>
-        <div id="adminCreateTab" class="hidden"><div class="card"><h3>➕ አዲስ ፈተና</h3><div class="form-group"><label>ርዕስ</label><input type="text" id="examTitle" placeholder="ለምሳሌ: ኢንስፔክሽን ፈተና"></div><div class="form-row"><div class="form-group"><label>ምርጫ (1-30)</label><input type="number" id="mcqCount" min="1" max="30" value="10"></div><div class="form-group"><label>ዳሽ ሙላ (1-10)</label><input type="number" id="fillCount" min="0" max="10" value="5"></div><div class="form-group"><label>አጭር መልስ (1-10)</label><input type="number" id="shortCount" min="0" max="10" value="5"></div></div><div class="form-row"><div class="form-group"><label>ጊዜ/ጥያቄ (ደቂቃ)</label><input type="number" id="timePerQ" min="1" max="5" value="2"></div><div class="form-group"><label>ምርጫ ክብደት</label><input type="number" id="mcqWeight" value="5"></div><div class="form-group"><label>ዳሽ ሙላ ክብደት</label><input type="number" id="fillWeight" value="10"></div><div class="form-group"><label>አጭር መልስ ክብደት</label><input type="number" id="shortWeight" value="15"></div></div><button class="btn btn-primary" onclick="createExam()">🚀 ፈተና ፍጠር</button><div id="newExamLink" class="hidden" style="margin-top:15px;"><strong>🔗 ሊንክ፦</strong><input type="text" id="examLinkInput" readonly><button onclick="copyLink()">📋 ቅዳ</button></div></div></div>
-        <div id="adminBankTab" class="hidden"><div class="card"><h3>📚 የጥያቄ ባንክ - ከመመሪያው የተወሰደ</h3><p><strong>30 ምርጫ፣ 10 ዳሽ ሙላ፣ 10 አጭር መልስ - ምንም ድግግሞሽ የለም!</strong></p><div id="bankStats"></div><div id="bankList" style="max-height:500px;overflow:auto;"></div><hr><h4>➕ አዲስ ጥያቄ መጨመሪያ</h4><div class="form-row"><div class="form-group"><label>ዓይነት</label><select id="qType"><option value="mcq">ምርጫ</option><option value="fill">ዳሽ ሙላ</option><option value="short">አጭር መልስ</option></select></div><div class="form-group"><label>ጥያቄ</label><textarea id="newQuestion" rows="2" placeholder="ጥያቄውን ያስገቡ"></textarea></div></div><div class="form-row" id="mcqOptionsDiv"><div class="form-group"><label>አማራጭ ሀ</label><input type="text" id="optA"></div><div class="form-group"><label>አማራጭ ለ</label><input type="text" id="optB"></div><div class="form-group"><label>አማራጭ ሐ</label><input type="text" id="optC"></div><div class="form-group"><label>አማራጭ መ</label><input type="text" id="optD"></div></div><div class="form-group"><label>ትክክለኛ መልስ</label><input type="text" id="correctAnswer" placeholder="ለምርጫ 0-3፣ ለሌሎች ጽሁፍ"></div><div class="form-group"><label>ማጣቀሻ (ገጽ እና ክፍል)</label><input type="text" id="refPage"></div><button class="btn btn-success" onclick="addQuestion()">➕ ጥያቄ ጨምር</button><button class="btn btn-primary" onclick="exportQuestions()">💾 ጥያቄዎችን ማስቀመጫ</button></div></div>
-        <div id="adminExamineesTab" class="hidden"><div class="card"><h3>👥 ተፈታኞች መመዝገብ</h3><div class="form-row"><div class="form-group"><label>ስም</label><input type="text" id="examineeName" placeholder="ሙሉ ስም"></div><div class="form-group"><label>ፈተና</label><select id="examSelect"></select></div></div><button class="btn btn-success" onclick="generateOTP()">🔑 OTP አመንጭ</button><div id="otpResult"></div></div><div class="card"><h3>📋 የተመዘገቡ ተፈታኞች</h3><input type="text" id="searchExaminee" placeholder="🔍 ፈልግ" style="width:100%;padding:10px;margin-bottom:15px;border-radius:10px;border:1px solid #ddd;" oninput="filterExaminees()"><div id="examineesList"></div></div></div>
-        <div id="adminResultsTab" class="hidden"><div class="card"><h3>📊 ውጤቶች</h3><input type="text" id="searchResult" placeholder="🔍 ፈልግ" style="width:100%;padding:10px;margin-bottom:15px;border-radius:10px;border:1px solid #ddd;" oninput="filterResults()"><div id="resultsList"></div></div></div>
-        <div id="adminRecycleTab" class="hidden"><div class="card"><h3>🗑️ ሪሳይክል ቢን</h3><button class="btn btn-success" onclick="restoreAll()">♻️ ሁሉንም መልስ</button><button class="btn btn-danger" onclick="emptyRecycle()">🗑️ ሙሉ ማጥፊያ</button><div id="recycleList"></div></div></div>
+        <div id="adminCreateTab" class="hidden"><div class="card"><h3>➕ አዲስ ፈተና</h3><div class="form-group"><label>ርዕስ</label><input type="text" id="examTitle" placeholder="ለምሳሌ: ኢንስፔክሽን ፈተና"></div><div class="form-row"><div class="form-group"><label>ምርጫ (1-30)</label><input type="number" id="mcqCount" min="1" max="30" value="10"></div><div class="form-group"><label>ዳሽ ሙላ (1-10)</label><input type="number" id="fillCount" min="0" max="10" value="5"></div><div class="form-group"><label>አጭር መልስ (1-10)</label><input type="number" id="shortCount" min="0" max="10" value="5"></div></div><div class="form-row"><div class="form-group"><label>ጊዜ/ጥያቄ (ደቂቃ)</label><input type="number" id="timePerQ" min="1" max="5" value="2"></div><div class="form-group"><label>ምርጫ ክብደት</label><input type="number" id="mcqWeight" value="5"></div><div class="form-group"><label>ዳሽ ሙላ ክብደት</label><input type="number" id="fillWeight" value="10"></div><div class="form-group"><label>አጭር መልስ ክብደት</label><input type="number" id="shortWeight" value="15"></div></div><button class="btn btn-primary" onclick="createExam()">🚀 ፈተና ፍጠር</button><div id="newExamLink" class="hidden" style="margin-top:15px;"><strong>🔗 ሊንክ፦</strong><div style="display:flex;gap:10px;margin-top:5px;"><input type="text" id="examLinkInput" readonly style="flex:1;"><button class="btn btn-success" onclick="copyLink()">📋 ቅዳ</button></div></div></div></div>
+        <div id="adminBankTab" class="hidden"><div class="card"><h3>📚 የጥያቄ ባንክ (30 ምርጫ፣ 10 ዳሽ ሙላ፣ 10 አጭር መልስ)</h3><div id="bankStats"></div><div id="bankList" style="max-height:400px;overflow:auto;"></div></div></div>
+        <div id="adminExamineesTab" class="hidden">
+            <div class="card"><h3>👥 ተፈታኝ መመዝገብ</h3><div class="form-row"><div class="form-group"><label>ሙሉ ስም</label><input type="text" id="examineeName" placeholder="ለምሳሌ: አለሙ በከለ"></div><div class="form-group"><label>ፈተና ምረጥ</label><select id="examSelect"></select></div></div><button class="btn btn-success" onclick="generateOTP()">🔑 OTP አመንጭ</button><div id="otpResult"></div></div>
+            <div class="card"><h3>📋 የተመዘገቡ ተፈታኞች</h3><div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:15px;"><input type="text" id="searchExaminee" placeholder="🔍 በስም ፈልግ..." style="flex:1;padding:10px;border-radius:10px;border:1px solid #ddd;"><button class="btn btn-danger" onclick="bulkDeleteExaminees()">🗑️ የተመረጡትን ሁሉ አጥፋ</button><button class="btn btn-warning" onclick="editSelectedExaminee()">✏️ አርትዕ</button></div><div id="examineesList"></div></div>
+        </div>
+        <div id="adminResultsTab" class="hidden"><div class="card"><h3>📊 ውጤቶች</h3><input type="text" id="searchResult" class="search-input" placeholder="🔍 በስም ፈልግ..." oninput="filterResults()"><div id="resultsList"></div></div></div>
+        <div id="adminRecycleTab" class="hidden"><div class="card"><h3>🗑️ ሪሳይክል ቢን</h3><div style="display:flex;gap:10px;margin-bottom:15px;"><button class="btn btn-success" onclick="restoreAllFromRecycle()">♻️ ሁሉንም መልስ</button><button class="btn btn-danger" onclick="emptyRecycleBin()">🗑️ ሙሉ ማጥፊያ</button></div><div id="recycleList"></div></div></div>
     </div>
 
-    <!-- ተፈታኝ ሎጂን ገጽ -->
+    <!-- ተፈታኝ ሎጂን -->
     <div id="examLoginScreen" class="hidden">
         <div class="login-box">
             <h2>🔐 የተፈታኝ መግቢያ</h2>
             <p style="text-align:center;margin-bottom:20px;color:#666;">ከአድሚን የተላከልዎትን 4-አሃዝ OTP ያስገቡ</p>
             <div class="form-group"><label>OTP ኮድ</label><input type="text" id="examOtp" placeholder="0000" style="text-align:center;font-size:1.5rem;letter-spacing:5px;" maxlength="4"></div>
-            <button class="btn btn-primary" onclick="verifyOTP()">✅ ወደ ፈተና ግባ</button>
-            <button class="btn back-btn" onclick="goBack()">🔙 ተመለስ</button>
+            <button class="btn btn-primary btn-block" onclick="verifyOTP()">✅ ወደ ፈተና ግባ</button>
+            <button class="btn btn-secondary btn-block" onclick="goBack()">🔙 ተመለስ</button>
         </div>
     </div>
 
     <!-- ተፈታኝ ፈተና ገጽ -->
-    <div id="examScreen" class="hidden"><div class="card"><div class="timer" id="timerDisplay">⏱️ 00:00</div><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><div id="questionsContainer"></div><button class="btn btn-success" style="width:100%;margin-top:20px;" onclick="submitExam()">✅ ፈተና አስጨርስ</button></div></div>
+    <div id="examScreen" class="hidden"><div class="card"><div class="timer" id="timerDisplay">⏱️ 00:00</div><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><div id="questionsContainer"></div><button class="btn btn-success btn-block" style="margin-top:20px;" onclick="submitExam()">✅ ፈተና አስጨርስ</button></div></div>
 </div>
 
 <script>
-    // ==================== 30 ምርጫ ጥያቄዎች (ምንም ድግግሞሽ) ====================
-    const mcqQuestions = [
-        {id:1,question:"ይህ መመሪያ በምን ቁጥር ይታወቃል?",options:["009/2011","230/2011","1074/2010","681/2002"],correct:0,reference:"ገጽ 1 እና ክፍል 1.1 አጭር ርዕስ"},
-        {id:2,question:"የመመሪያው አውጪ ተቋም የትኛው ነው?",options:["የኢትዮጵያ ፌዴራል ትራንስፖርት ባለስልጣን","የአማራ ክልል መንገድና ትራንስፖርት ቢሮ","የባህር ዳር ከተማ አስተዳደር","የዞን መምሪያዎች"],correct:1,reference:"ገጽ 1 እና መግቢያ"},
-        {id:3,question:"“ቢሮ” በዚህ መመሪያ መሰረት ምን ማለት ነው?",options:["የዞን መንገድና ትራንስፖርት መምሪያ","የአማራ ብሄራዊ ክልላዊ መንግስት መንገድና ትራንስፖርት ቢሮ","የወረዳ የመንገድና ትራንስፖርት ጽ/ቤት","የትራንስፖርት አገልግሎት ክትትልና ኢንስፔክሽን ዳይሬክቶሪት"],correct:1,reference:"ክፍል 1.2 ትርጓሜ ቁጥር 1፣ ገጽ 4"},
-        {id:4,question:"“መምሪያ” ማለት በዚህ መመሪያ መሰረት ምን ማለት ነው?",options:["የክልል ቢሮ","የዞን መንገድና ትራንስፖርት መምሪያ","የወረዳ ጽ/ቤት","የከተማ አስተዳደር"],correct:1,reference:"ክፍል 1.2 ትርጓሜ ቁጥር 2፣ ገጽ 4"},
-        {id:5,question:"“የትራንስፖርት አገልግሎት ክትትልና ኢንስፔክሽን ዳይሬክቶሪት” ምን ማለት ነው?",options:["በዞን ደረጃ ያለ ቡድን","በቢሮው ወደታች በየደረጃው የትራንስፖርት አገልግሎት የሚሰጡ ተቋማትን አሰራራቸውን በውስጥና በውጭ ኢንስፔክሽን የሚመረምር ዳይሬክተር፣ ቡድን ወይም ፈፃሚ","የተሽከርካሪ ምርመራ ተቋማት ብቻ","የአሽከርካሪ ማሰልጠኛ ተቋማት ብቻ"],correct:1,reference:"ክፍል 1.2 ትርጓሜ ቁጥር 3፣ ገጽ 4"},
-        {id:6,question:"“የውጭ ኢንስፔክሽን” ምን ማለት ነው?",options:["በቢሮ ውስጥ ያሉ ዳይሬክቶሬቶችን መመርመር","በትራንስፖርት አገልግሎት ዘርፍ ላይ የተሰማሩ ተዋናዮች (ጥገና፣ ምርመራ፣ ማሰልጠኛ ተቋማት፣ ማህበራት፣ ተሽከርካሪዎች፣ ጀልባዎች) በመመሪያው እየሰሩ መሆናቸውን የሚረጋገጥበት አሰራር","የውስጥ ብቻ የተወሰነ","የቅሬታ አቀራረብ ብቻ"],correct:1,reference:"ክፍል 1.2 ትርጓሜ ቁጥር 10፣ ገጽ 4-5"},
-        {id:7,question:"“ማገድ” በዚህ መመሪያ መሰረት ምን ማለት ነው?",options:["ተሽከርካሪን መጠገን","በኢንስፔክሽን ወቅት የተገኙ ጉድለቶችን መነሻ በማድረግ ጉድለቶች እስኪስተካከሉ ድረስ አገልግሎቶችን ማስቆም","ፈቃድ መሰረዝ","ቅጣት መጣል"],correct:1,reference:"ክፍል 1.2 ትርጓሜ ቁጥር 11፣ ገጽ 4"},
-        {id:8,question:"“መደበኛ ኢንስፔክሽን” ማለት ምን ማለት ነው?",options:["ዕቅድና ፕሮግራም ተይዞለት የሚከናወን የኢንስፔክሽን ስራ","ድንገተኛ ምርመራ","ዓመታዊ ምርመራ","የቅሬታ ምርመራ"],correct:0,reference:"ክፍል 1.2 ትርጓሜ ቁጥር 12፣ ገጽ 5"},
-        {id:9,question:"“ድንገተኛ ኢንስፔክሽን” ማለት ምን ማለት ነው?",options:["ዕቅድና ፕሮግራም ሳይያዝለት በድንገት ወይም መረጃ/ጥቆማ/ ሲደርስ የሚከናወን የኢንስፔክሽን ስራ","የታቀደ ምርመራ","የዓመት ምርመራ","የወር ምርመራ"],correct:0,reference:"ክፍል 1.2 ትርጓሜ ቁጥር 13፣ ገጽ 5"},
-        {id:10,question:"የዚህ መመሪያ ዓላማ ምንድን ነው?",options:["ተቋማትን ለመዝጋት ብቻ","የትራንስፖርት ዘርፍ የወጡ አዋጆች፣ ደንቦችና መመሪያዎች ከክልል እስከ ወረዳ ባለው መዋቅር በተገቢው መንገድ መፈጸማቸውን ለማረጋገጥ","የተሽከርካሪ ብቻ መመርመር","የአሽከርካሪዎችን ብቻ ማሰልጠን"],correct:1,reference:"ክፍል 1.4 ዓላማ፣ ገጽ 6"},
-        {id:11,question:"“ኢንስፔክሽን” በዚህ መመሪያ መሰረት ምን ማለት ነው?",options:["ተሽከርካሪዎችን መጠገን","አዋጆች፣ ደንቦች፣ መመሪያዎችና ስታንዳርዶች በተገቢው መንገድ መተግበራቸውን የሚረጋገጥበት አሰራር","የቅሬታ መቀበል ብቻ","የፈቃድ መስጠት"],correct:1,reference:"ክፍል 1.2 ትርጓሜ ቁጥር 8፣ ገጽ 4"},
-        {id:12,question:"“የውስጥ ኢንስፔክሽን” ምን ማለት ነው?",options:["የውጭ ተቋማት መመርመር","በቢሮው ውስጥ ያሉ ዳይሬክቶሬቶች፣ ቡድኖችና ባለሙያዎች የሚሰጡት አገልግሎት በአሰራር መመሪያ መሰረት መሆኑን ማረጋገጥ","የመንገድ ላይ ቁጥጥር","የማህበራት ቁጥጥር"],correct:1,reference:"ክፍል 1.2 ትርጓሜ ቁጥር 9፣ ገጽ 4"},
-        {id:13,question:"“ህገወጥ ስምሪት” ምን ማለት ነው?",options:["ህጋዊ የትራንስፖርት አገልግሎት","በህዝብ፣ በከተማ፣ በውሀና በጭነት ትራንስፖርት አገልግሎት ዙሪያ የወጡ የሕግ ድንጋጌዎችን የሚጥስ ድርጊት","የተፈቀደ አገልግሎት","የተሽከርካሪ ጥገና"],correct:1,reference:"ክፍል 1.2 ትርጓሜ ቁጥር 7፣ ገጽ 4"},
-        {id:14,question:"የትራንስፖርት አገልግሎት ክትትልና ኢንስፔክሽን ዳይሬክቶሪት ስንት ዋና ዋና ተግባራት አሉት?",options:["10","15","25","33"],correct:2,reference:"ክፍል 2.1 ገጽ 7-8"},
-        {id:15,question:"የዞን መምሪያዎች የትራንስፖርት አገልግሎት ክትትልና ኢንስፔክሽን ቡድን ስንት ዋና ተግባራት አሉት?",options:["10","20","25","30"],correct:1,reference:"ክፍል 2.2 ገጽ 8-9"},
-        {id:16,question:"የአሽከርካሪ ማሰልጠኛ ተቋማት ስንት ግዴታዎች አሏቸው?",options:["5","7","8","10"],correct:1,reference:"ክፍል 2.4 ገጽ 10-11"},
-        {id:17,question:"በወረዳ/ከተማ ደረጃ ቅሬታ የሚቀርብበት ጊዜ ስንት ቀን ነው?",options:["3 ቀን","5 ቀን","7 ቀን","10 ቀን"],correct:1,reference:"ክፍል 3 ቁጥር 2፣ ገጽ 13"},
-        {id:18,question:"የወረዳ/ከተማ ጽ/ቤት ሃላፊ ለቀረበው ቅሬታ ምላሽ የሚሰጠው በስንት ቀን ጊዜ ውስጥ ነው?",options:["5 ቀን","7 ቀን","10 ቀን","15 ቀን"],correct:2,reference:"ክፍል 3 ቁጥር 2፣ ገጽ 13"},
-        {id:19,question:"ለዞን መምሪያ በይግባኝ ቅሬታ የሚቀርብበት ጊዜ ስንት ቀን ነው?",options:["5 ቀን","7 ቀን","10 ቀን","15 ቀን"],correct:2,reference:"ክፍል 3 ቁጥር 3፣ ገጽ 13"},
-        {id:20,question:"የዞን መምሪያ ለይግባኝ ቅሬታ ምላሽ የሚሰጠው በስንት ቀን ጊዜ ውስጥ ነው?",options:["5 ቀን","7 ቀን","10 ቀን","15 ቀን"],correct:1,reference:"ክፍል 3 ቁጥር 3፣ ገጽ 13"},
-        {id:21,question:"ለክልሉ መንገድና ትራንስፖርት ቢሮ በይግባኝ ቅሬታ የሚቀርብበት ጊዜ ስንት ቀን ነው?",options:["7 ቀን","10 ቀን","15 ቀን","30 ቀን"],correct:2,reference:"ክፍል 3 ቁጥር 4፣ ገጽ 13"},
-        {id:22,question:"የክልል ቢሮ ለይግባኝ ቅሬታ ምላሽ የሚሰጠው በስንት ቀን ጊዜ ውስጥ ነው?",options:["7 ቀን","10 ቀን","15 ቀን","30 ቀን"],correct:2,reference:"ክፍል 3 ቁጥር 4፣ ገጽ 13"},
-        {id:23,question:"በክልል ቢሮ ደረጃ ለተገኘ ከባድ የዲስፒሊን ግድፈት ምን እርምጃ ይወሰዳል?",options:["የጽሁፍ ማስጠንቀቂያ","የተሰጠውን የብቃት ማረጋገጫ ወይም የማህበር ፈቃድ ይሰርዛል","ለአንድ ወር ማገድ","መዝጋት"],correct:1,reference:"ክፍል 4.1 ቁጥር 12.1፣ ገጽ 14"},
-        {id:24,question:"በክልል ትራንስፖርት አገልግሎት ኢንስፔክሽን ዳይሬክቶሪት ደረጃ ለህገወጥ አገልግሎት የመጀመሪያ እርምጃ ምንድን ነው?",options:["ፈቃድ መሰረዝ","ከመጀመሪያ የጽሁፍ ማስጠንቀቂያ እስከ መጨረሻ የጽሁፍ ማስጠንቀቂያ መስጠት","ተቋሙን መዝጋት","ህጋዊ ክስ"],correct:1,reference:"ክፍል 4.2 ቁጥር 12.2.1፣ ገጽ 14"},
-        {id:25,question:"በዞን/ከተማ አስተዳደር ኢንስፔክሽን ቡድን ደረጃ ለህገወጥ አገልግሎት የመጀመሪያ እርምጃ ምንድን ነው?",options:["ፈቃድ መሰረዝ","ከመጀመሪያ የጽሁፍ ማስጠንቀቂያ እስከ መጨረሻ የጽሁፍ ማስጠንቀቂያ መስጠት","ቀጥታ ማገድ","ማስጠንቀቂያ ብቻ"],correct:1,reference:"ክፍል 4.4 ቁጥር 12.4.1፣ ገጽ 15"},
-        {id:26,question:"የተጠቀሱት ማህበራት ከምን አይነት አገልግሎት ጋር ተያይዘው ተጠቅሰዋል?",options:["የህዝብ፣ የከተማ፣ የውሀ እና የጭነት ትራንስፖርት","የኤሌክትሪክ ትራንስፖርት","የአየር ትራንስፖርት","የባቡር ትራንስፖርት"],correct:0,reference:"ክፍል 2.7 ገጽ 12"},
-        {id:27,question:"የተሸከርካሪ ምርመራ ተቋማት የተሰጣቸውን የብቃት ማረጋገጫ ሰርተፍኬት ምን ማድረግ አለባቸው?",options:["ማቆየት ብቻ","በወቅቱ አሳድሶ መገኘት","ለሌሎች መሸጥ","ማጥፋት"],correct:1,reference:"ክፍል 2.5 ቁጥር 5፣ ገጽ 11"},
-        {id:28,question:"የተሸከርካሪ ጥገና ተቋማት በኢንስፔክሽን ወቅት ምን ግዴታ አለባቸው?",options:["መረጃዎችን መደበቅ","አስፈላጊውን ትብብር ማድረግ","ተቋሙን መዝጋት","ምንም ማድረግ አያስፈልግም"],correct:1,reference:"ክፍል 2.6 ቁጥር 6፣ ገጽ 12"},
-        {id:29,question:"የህዝብና የከተማ ትራንስፖርት ማህበራት በኢንስፔክሽን ወቅት ምን ግዴታ አለባቸው?",options:["የኢንስፔክሽን ቡድንን መከልከል","አስፈላጊውን ትብብር ማድረግ","መረጃዎችን መደበቅ","ምንም ማድረግ አያስፈልግም"],correct:1,reference:"ክፍል 2.7 ቁጥር 7፣ ገጽ 12"},
-        {id:30,question:"ይህ መመሪያ የሚፀናበት ጊዜ መቼ ነው?",options:["ከየካቲት 14/2011 ዓ.ም ጀምሮ","ከመጋቢት 1/2011 ዓ.ም","ከታህሳስ 2011 ዓ.ም","ከወጣበት ቀን በኋላ በ30 ቀን"],correct:0,reference:"ክፍል 4.8፣ ገጽ 17"}
+    // ==================== ሙሉ ጥያቄዎች (30 ምርጫ + 10 ዳሽ ሙላ + 10 አጭር መልስ - ምንም ድግግሞሽ) ====================
+    const MCQ_LIST = [
+        {id:1,q:"ይህ መመሪያ በምን ቁጥር ይታወቃል?",opt:["009/2011","230/2011","1074/2010","681/2002"],cor:0,ref:"ገጽ 1፣ ክፍል 1.1"},
+        {id:2,q:"የመመሪያው አውጪ ተቋም የትኛው ነው?",opt:["የኢትዮጵያ ፌዴራል ትራንስፖርት ባለስልጣን","የአማራ ክልል መንገድና ትራንስፖርት ቢሮ","የባህር ዳር ከተማ አስተዳደር","የዞን መምሪያዎች"],cor:1,ref:"ገጽ 1፣ መግቢያ"},
+        {id:3,q:"\"ቢሮ\" በዚህ መመሪያ መሰረት ምን ማለት ነው?",opt:["የዞን መንገድና ትራንስፖርት መምሪያ","የአማራ ብሄራዊ ክልላዊ መንግስት መንገድና ትራንስፖርት ቢሮ","የወረዳ የመንገድና ትራንስፖርት ጽ/ቤት","የትራንስፖርት አገልግሎት ክትትልና ኢንስፔክሽን ዳይሬክቶሪት"],cor:1,ref:"ክፍል 1.2 ትርጓሜ #1፣ ገጽ 4"},
+        {id:4,q:"\"መምሪያ\" ማለት በዚህ መመሪያ መሰረት ምን ማለት ነው?",opt:["የክልል ቢሮ","የዞን መንገድና ትራንስፖርት መምሪያ","የወረዳ ጽ/ቤት","የከተማ አስተዳደር"],cor:1,ref:"ክፍል 1.2 ትርጓሜ #2፣ ገጽ 4"},
+        {id:5,q:"\"የውጭ ኢንስፔክሽን\" ምን ማለት ነው?",opt:["በቢሮ ውስጥ ያሉ ዳይሬክቶሬቶችን መመርመር","በትራንስፖርት አገልግሎት ዘርፍ ላይ የተሰማሩ ተዋናዮች በመመሪያው እየሰሩ መሆናቸውን የሚረጋገጥበት አሰራር","የውስጥ ብቻ የተወሰነ","የቅሬታ አቀራረብ ብቻ"],cor:1,ref:"ክፍል 1.2 ትርጓሜ #10፣ ገጽ 4-5"},
+        {id:6,q:"\"ማገድ\" በዚህ መመሪያ መሰረት ምን ማለት ነው?",opt:["ተሽከርካሪን መጠገን","በኢንስፔክሽን ወቅት የተገኙ ጉድለቶችን መነሻ በማድረግ አገልግሎቶችን ማስቆም","ፈቃድ መሰረዝ","ቅጣት መጣል"],cor:1,ref:"ክፍል 1.2 ትርጓሜ #11፣ ገጽ 4"},
+        {id:7,q:"\"መደበኛ ኢንስፔክሽን\" ማለት ምን ማለት ነው?",opt:["ዕቅድና ፕሮግራም ተይዞለት የሚከናወን የኢንስፔክሽን ስራ","ድንገተኛ ምርመራ","ዓመታዊ ምርመራ","የቅሬታ ምርመራ"],cor:0,ref:"ክፍል 1.2 ትርጓሜ #12፣ ገጽ 5"},
+        {id:8,q:"\"ድንገተኛ ኢንስፔክሽን\" ማለት ምን ማለት ነው?",opt:["ዕቅድና ፕሮግራም ሳይያዝለት በድንገት ወይም መረጃ/ጥቆማ/ ሲደርስ የሚከናወን ስራ","የታቀደ ምርመራ","የዓመት ምርመራ","የወር ምርመራ"],cor:0,ref:"ክፍል 1.2 ትርጓሜ #13፣ ገጽ 5"},
+        {id:9,q:"የዚህ መመሪያ ዓላማ ምንድን ነው?",opt:["ተቋማትን ለመዝጋት ብቻ","የትራንስፖርት ዘርፍ የወጡ አዋጆች፣ ደንቦችና መመሪያዎች በተገቢው መንገድ መፈጸማቸውን ለማረጋገጥ","የተሽከርካሪ ብቻ መመርመር","የአሽከርካሪዎችን ብቻ ማሰልጠን"],cor:1,ref:"ክፍል 1.4 ዓላማ፣ ገጽ 6"},
+        {id:10,q:"\"ኢንስፔክሽን\" በዚህ መመሪያ መሰረት ምን ማለት ነው?",opt:["ተሽከርካሪዎችን መጠገን","አዋጆች፣ ደንቦች፣ መመሪያዎችና ስታንዳርዶች በተገቢው መንገድ መተግበራቸውን የሚረጋገጥበት አሰራር","የቅሬታ መቀበል ብቻ","የፈቃድ መስጠት"],cor:1,ref:"ክፍል 1.2 ትርጓሜ #8፣ ገጽ 4"},
+        {id:11,q:"\"የውስጥ ኢንስፔክሽን\" ምን ማለት ነው?",opt:["የውጭ ተቋማት መመርመር","በቢሮው ውስጥ ያሉ ዳይሬክቶሬቶች፣ ቡድኖችና ባለሙያዎች የሚሰጡት አገልግሎት በአሰራር መመሪያ መሰረት መሆኑን ማረጋገጥ","የመንገድ ላይ ቁጥጥር","የማህበራት ቁጥጥር"],cor:1,ref:"ክፍል 1.2 ትርጓሜ #9፣ ገጽ 4"},
+        {id:12,q:"\"ህገወጥ ስምሪት\" ምን ማለት ነው?",opt:["ህጋዊ የትራንስፖርት አገልግሎት","በህዝብ፣ በከተማ፣ በውሀና በጭነት ትራንስፖርት አገልግሎት ዙሪያ የወጡ የሕግ ድንጋጌዎችን የሚጥስ ድርጊት","የተፈቀደ አገልግሎት","የተሽከርካሪ ጥገና"],cor:1,ref:"ክፍል 1.2 ትርጓሜ #7፣ ገጽ 4"},
+        {id:13,q:"የትራንስፖርት አገልግሎት ክትትልና ኢንስፔክሽን ዳይሬክቶሪት ስንት ዋና ተግባራት አሉት?",opt:["10","15","25","33"],cor:2,ref:"ክፍል 2.1 ገጽ 7-8"},
+        {id:14,q:"የዞን መምሪያዎች የትራንስፖርት አገልግሎት ክትትልና ኢንስፔክሽን ቡድን ስንት ዋና ተግባራት አሉት?",opt:["10","20","25","30"],cor:1,ref:"ክፍል 2.2 ገጽ 8-9"},
+        {id:15,q:"በወረዳ/ከተማ ደረጃ ቅሬታ የሚቀርብበት ጊዜ ስንት ቀን ነው?",opt:["3","5","7","10"],cor:1,ref:"ክፍል 3 ቁጥር 2፣ ገጽ 13"},
+        {id:16,q:"የወረዳ/ከተማ ጽ/ቤት ሃላፊ ለቀረበው ቅሬታ ምላሽ የሚሰጠው በስንት ቀን ውስጥ ነው?",opt:["5","7","10","15"],cor:2,ref:"ክፍል 3 ቁጥር 2፣ ገጽ 13"},
+        {id:17,q:"ለዞን መምሪያ በይግባኝ ቅሬታ የሚቀርብበት ጊዜ ስንት ቀን ነው?",opt:["5","7","10","15"],cor:2,ref:"ክፍል 3 ቁጥር 3፣ ገጽ 13"},
+        {id:18,q:"የዞን መምሪያ ለይግባኝ ቅሬታ ምላሽ የሚሰጠው በስንት ቀን ውስጥ ነው?",opt:["5","7","10","15"],cor:1,ref:"ክፍል 3 ቁጥር 3፣ ገጽ 13"},
+        {id:19,q:"ለክልሉ መንገድና ትራንስፖርት ቢሮ በይግባኝ ቅሬታ የሚቀርብበት ጊዜ ስንት ቀን ነው?",opt:["7","10","15","30"],cor:2,ref:"ክፍል 3 ቁጥር 4፣ ገጽ 13"},
+        {id:20,q:"የክልል ቢሮ ለይግባኝ ቅሬታ ምላሽ የሚሰጠው በስንት ቀን ውስጥ ነው?",opt:["7","10","15","30"],cor:2,ref:"ክፍል 3 ቁጥር 4፣ ገጽ 13"},
+        {id:21,q:"በክልል ቢሮ ደረጃ ለተገኘ ከባድ የዲስፒሊን ግድፈት ምን እርምጃ ይወሰዳል?",opt:["የጽሁፍ ማስጠንቀቂያ","የተሰጠውን የብቃት ማረጋገጫ ወይም የማህበር ፈቃድ ይሰርዛል","ለአንድ ወር ማገድ","መዝጋት"],cor:1,ref:"ክፍል 4.1 ቁጥር 12.1፣ ገጽ 14"},
+        {id:22,q:"በክልል ዳይሬክቶሪት ደረጃ ለህገወጥ አገልግሎት የመጀመሪያ እርምጃ ምንድን ነው?",opt:["ፈቃድ መሰረዝ","ከመጀመሪያ የጽሁፍ ማስጠንቀቂያ እስከ መጨረሻ የጽሁፍ ማስጠንቀቂያ መስጠት","ተቋሙን መዝጋት","ህጋዊ ክስ"],cor:1,ref:"ክፍል 4.2 ቁጥር 12.2.1፣ ገጽ 14"},
+        {id:23,q:"በዞን/ከተማ ኢንስፔክሽን ቡድን ደረጃ ለህገወጥ አገልግሎት የመጀመሪያ እርምጃ ምንድን ነው?",opt:["ፈቃድ መሰረዝ","ከመጀመሪያ የጽሁፍ ማስጠንቀቂያ እስከ መጨረሻ የጽሁፍ ማስጠንቀቂያ መስጠት","ቀጥታ ማገድ","ማስጠንቀቂያ ብቻ"],cor:1,ref:"ክፍል 4.4 ቁጥር 12.4.1፣ ገጽ 15"},
+        {id:24,q:"የተሸከርካሪ ምርመራ ተቋማት የተሰጣቸውን የብቃት ማረጋገጫ ሰርተፍኬት ምን ማድረግ አለባቸው?",opt:["ማቆየት ብቻ","በወቅቱ አሳድሶ መገኘት","ለሌሎች መሸጥ","ማጥፋት"],cor:1,ref:"ክፍል 2.5 ቁጥር 5፣ ገጽ 11"},
+        {id:25,q:"የተሸከርካሪ ጥገና ተቋማት በኢንስፔክሽን ወቅት ምን ግዴታ አለባቸው?",opt:["መረጃዎችን መደበቅ","አስፈላጊውን ትብብር ማድረግ","ተቋሙን መዝጋት","ምንም ማድረግ አያስፈልግም"],cor:1,ref:"ክፍል 2.6 ቁጥር 6፣ ገጽ 12"},
+        {id:26,q:"የህዝብና የከተማ ትራንስፖርት ማህበራት በኢንስፔክሽን ወቅት ምን ግዴታ አለባቸው?",opt:["የኢንስፔክሽን ቡድንን መከልከል","አስፈላጊውን ትብብር ማድረግ","መረጃዎችን መደበቅ","ምንም ማድረግ አያስፈልግም"],cor:1,ref:"ክፍል 2.7 ቁጥር 7፣ ገጽ 12"},
+        {id:27,q:"የተጠቀሱት ማህበራት ከምን አይነት አገልግሎት ጋር ተያይዘው ተጠቅሰዋል?",opt:["የህዝብ፣ የከተማ፣ የውሀ እና የጭነት ትራንስፖርት","የኤሌክትሪክ ትራንስፖርት","የአየር ትራንስፖርት","የባቡር ትራንስፖርት"],cor:0,ref:"ክፍል 2.7 ገጽ 12"},
+        {id:28,q:"የአሽከርካሪ ማሰልጠኛ ተቋማት ስንት ግዴታዎች አሏቸው?",opt:["5","7","8","10"],cor:1,ref:"ክፍል 2.4 ገጽ 10-11"},
+        {id:29,q:"የአሽከርካሪ ማሰልጠኛ ተቋማት ከሰልጣኞች ተጨማሪ ክፍያ መጠየቅ ምን ይባላል?",opt:["የተፈቀደ ነው","ፈጽሞ የተከለከለ ነው","በተቋሙ ውሳኔ ይፈቀዳል","ለአንድ ጊዜ ብቻ ይፈቀዳል"],cor:1,ref:"ክፍል 2.4 ቁጥር 4፣ ገጽ 11"},
+        {id:30,q:"ይህ መመሪያ የሚፀናበት ጊዜ መቼ ነው?",opt:["ከየካቲት 14/2011 ዓ.ም","ከመጋቢት 1/2011 ዓ.ም","ከታህሳስ 2011 ዓ.ም","ከወጣበት ቀን በኋላ በ30 ቀን"],cor:0,ref:"ክፍል 4.8፣ ገጽ 17"}
     ];
 
-    // ==================== 10 ዳሽ ሙላ ጥያቄዎች ====================
-    const fillQuestions = [
-        {id:1,question:"ይህ መመሪያ “በአማራ ክልል መንገድና ትራንስፖርት ቢሮ የትራንስፖርት አገልግሎት ኢንስፔክሽን ማስፈጸሚያ መመሪያ ቁጥር _____ ተብሎ ሊጠቀስ ይችላል።",correct:"009/2011",reference:"ክፍል 1.1 አጭር ርዕስ፣ ገጽ 4"},
-        {id:2,question:"“መደበኛ ኢንስፔክሽን” ማለት፡- ዕቅድና ፕሮግራም ተይዞለት የሚከናወን የኢንስፔክሽን /የምርመራ / _____ ነው።",correct:"ስራ",reference:"ክፍል 1.2 ትርጓሜ ቁጥር 12፣ ገጽ 5"},
-        {id:3,question:"“ድንገተኛ ኢንስፔክሽን” ማለት፡- ዕቅድና ፕሮግራም ሳይያዝለት በድንገት ወይም መረጃ /ጥቆማ/ ሲደርስ የሚከናወን የኢንስፔክሽን /የምርመራ/ _____ ነው።",correct:"ስራ",reference:"ክፍል 1.2 ትርጓሜ ቁጥር 13፣ ገጽ 5"},
-        {id:4,question:"በወረዳዉ /የከተማዉ/ ፅ/ቤት ኃላፊ በ_____ ቀን ጊዜ ውስጥ ለቀረበዉ ቅሬታ ምላሽ መስጠት አለበት።",correct:"10",reference:"ክፍል 3 ቁጥር 2፣ ገጽ 13"},
-        {id:5,question:"የዞኑ መንገድና ትራንስፖርት መምሪያ የይግባኝቅሬታዉ በቀረበለት በ_____ ቀን ጊዜ ውስጥ ምላሽ መስጠት ይጠበቅበታል።",correct:"7",reference:"ክፍል 3 ቁጥር 3፣ ገጽ 13"},
-        {id:6,question:"የክልሉም በ_____ ቀን ጊዜ ውስጥ ምላሽ መስጠት አለበት።",correct:"15",reference:"ክፍል 3 ቁ�ር 4፣ ገጽ 13"},
-        {id:7,question:"ይህ መመሪያ በአብክመ የመንገድና ትራንስፖርት ቢሮ ኃላፊ ተፈርሞ ከወጣበት ከ_____ ጀምሮ የፀና ይሆናል።",correct:"የካቲት 14/2011 ዓ.ም",reference:"ክፍል 4.8፣ ገጽ 17"},
-        {id:8,question:"“ማገድ” ማለት በኢንስፔክሽን ወቅት የተገኙ _____ መነሻ በማድረግ አገልግሎቶችን ማስቆም ማለት ነው።",correct:"ጉድለቶችን",reference:"ክፍል 1.2 ትርጓሜ ቁጥር 11፣ ገጽ 4"},
-        {id:9,question:"“ግብረ-መልስ” ማለት በኢንስፔክሽን ወቅት የተገኙ _____ በመለየት እንዲስተካከሉ የሚሰጥ አስተያየት ነው።",correct:"ችግሮችን",reference:"ክፍል 1.2 ትርጓሜ ቁጥር 33፣ ገጽ 6"},
-        {id:10,question:"የአሽከርካሪ ማሰልጠኛ ተቋማት ከሰልጣኞች ተጨማሪ ክፍያ መጠየቅ ፈጽሞ _____ ነው።",correct:"የተከለከለ",reference:"ክፍል 2.4 ቁጥር 4፣ ገጽ 11"}
+    const FILL_LIST = [
+        {id:1,q:"ይህ መመሪያ \"በአማራ ክልል መንገድና ትራንስፖርት ቢሮ የትራንስፖርት አገልግሎት ኢንስፔክሽን ማስፈጸሚያ መመሪያ ቁጥር _____ ተብሎ ሊጠቀስ ይችላል።",cor:"009/2011",ref:"ክፍል 1.1፣ ገጽ 4"},
+        {id:2,q:"\"መደበኛ ኢንስፔክሽን\" ማለት፡- ዕቅድና ፕሮግራም ተይዞለት የሚከናወን የኢንስፔክሽን /የምርመራ/ _____ ነው።",cor:"ስራ",ref:"ክፍል 1.2 ትርጓሜ #12፣ ገጽ 5"},
+        {id:3,q:"\"ድንገተኛ ኢንስፔክሽን\" ማለት፡- ዕቅድና ፕሮግራም ሳይያዝለት በድንገት ወይም መረጃ/ጥቆማ/ ሲደርስ የሚከናወን የኢንስፔክሽን /የምርመራ/ _____ ነው።",cor:"ስራ",ref:"ክፍል 1.2 ትርጓሜ #13፣ ገጽ 5"},
+        {id:4,q:"በወረዳዉ /የከተማዉ/ ፅ/ቤት ኃላፊ በ_____ ቀን ጊዜ ውስጥ ለቀረበዉ ቅሬታ ምላሽ መስጠት አለበት።",cor:"10",ref:"ክፍል 3 ቁጥር 2፣ ገጽ 13"},
+        {id:5,q:"የዞኑ መምሪያ የይግባኝ ቅሬታ በቀረበለት በ_____ ቀን ውስጥ ምላሽ መስጠት ይጠበቅበታል።",cor:"7",ref:"ክፍል 3 ቁጥር 3፣ ገጽ 13"},
+        {id:6,q:"የክልሉም በ_____ ቀን ጊዜ ውስጥ ምላሽ መስጠት አለበት።",cor:"15",ref:"ክፍል 3 ቁጥር 4፣ ገጽ 13"},
+        {id:7,q:"ይህ መመሪያ በአብክመ መንገድና ትራንስፖርት ቢሮ ኃላፊ ተፈርሞ ከወጣበት ከ_____ ጀምሮ የፀና ይሆናል።",cor:"የካቲት 14/2011 ዓ.ም",ref:"ክፍል 4.8፣ ገጽ 17"},
+        {id:8,q:"\"ማገድ\" ማለት በኢንስፔክሽን ወቅት የተገኙ _____ መነሻ በማድረግ አገልግሎቶችን ማስቆም ማለት ነው።",cor:"ጉድለቶችን",ref:"ክፍል 1.2 ትርጓሜ #11፣ ገጽ 4"},
+        {id:9,q:"\"ግብረ-መልስ\" ማለት በኢንስፔክሽን ወቅት የተገኙ _____ በመለየት እንዲስተካከሉ የሚሰጥ አስተያየት ነው።",cor:"ችግሮችን",ref:"ክፍል 1.2 ትርጓሜ #33፣ ገጽ 6"},
+        {id:10,q:"የአሽከርካሪ ማሰልጠኛ ተቋማት ከሰልጣኞች ተጨማሪ ክፍያ መጠየቅ ፈጽሞ _____ ነው።",cor:"የተከለከለ",ref:"ክፍል 2.4 ቁጥር 4፣ ገጽ 11"}
     ];
 
-    // ==================== 10 አጭር መልስ ጥያቄዎች ====================
-    const shortQuestions = [
-        {id:1,question:"የመመሪያው ሙሉ ርዕስ እና ቁጥር ምንድን ነው?",correct:"የትራንስፖርት አገልግሎት ክትትልና ኢንስፔክሽን የማስፈፀሚያ መመሪያ ቁጥር 009/2011",keywords:["ትራንስፖርት","ኢንስፔክሽን","009/2011"],reference:"ገጽ 1 እና ክፍል 1.1"},
-        {id:2,question:"በዚህ መመሪያ መሰረት “ህገወጥ ስምሪት” ምን ማለት ነው?",correct:"በህዝብ፣ በከተማ፣ በውሀና በጭነት ትራንስፖርት አገልግሎት ዙሪያ የወጡ የሕግ ድንጋጌዎችን የሚጥስ ድርጊት",keywords:["ህግ","ድንጋጌ","የሚጥስ"],reference:"ክፍል 1.2 ትርጓሜ ቁጥር 7፣ ገጽ 4"},
-        {id:3,question:"በወረዳ ላይ ቅሬታ ያቀረበ ተገልጋይ ቅሬታውን በምን ደረጃ እንዴት ያቀርባል?",correct:"በመጀመሪያ ለወረዳው ፅ/ቤት ኃላፊ ያቀርባል፣ ከዚያ በይግባኝ ለዞን መምሪያ፣ ከዞን ለክልል ያቀርባል። የክልሉ ውሳኔ የመጨረሻ ነው",keywords:["ወረዳ","ዞን","ክልል","ይግባኝ"],reference:"ክፍል 3 ቁጥር 1፣ ገጽ 13"},
-        {id:4,question:"በክልል ቢሮ ደረጃ ለተገኘ ከባድ የዲስፒሊን ግድፈት ምን እርምጃ ይወሰዳል?",correct:"የተሰጠውን የብቃት ማረጋገጫ ወይም የማህበር ፈቃድ ይሰርዛል",keywords:["ፈቃድ","ማሰረዝ","ብቃት"],reference:"ክፍል 4.1 ቁጥር 12.1፣ ገጽ 14"},
-        {id:5,question:"የአሽከርካሪ ማሰልጠኛ ተቋማት ዋና ግዴታ ምንድን ነው? አንዱን ጥቀስ",correct:"የፌዴራል ትራንስፖርት ባለስልጣንና የአብክመ መንገድና ትራንስፖርት ቢሮ በአሽከርካሪ ማሰልጠኛ ተቋማት አሰራር ዙሪያ ያወጣቸውን አዋጆች፣ደንቦች፣መመሪያዎችና ስታንዳርዶችን መፈፀም",keywords:["አዋጆች","ደንቦች","መመሪያዎች"],reference:"ክፍል 2.4 ቁጥር 1፣ ገጽ 10"},
-        {id:6,question:"የውስጥ ኢንስፔክሽን ምን ማለት ነው?",correct:"በመንገድና ትራንስፖርት ቢሮ በትራንስፖርት ዘርፍ ስር የተደራጁትን ዳይሬክቶሬቶች፣ ቡድኖችና ባለሙያዎች የሚሰጡት አገልግሎት በተቀመጠው የአሰራር መመሪያ እና ስታንዳርድ መሰረት መሆኑን ማረጋገጥ",keywords:["ውስጥ","ዳይሬክቶሬቶች","አገልግሎት"],reference:"ክፍል 1.2 ትርጓሜ ቁጥር 9፣ ገጽ 4"},
-        {id:7,question:"የተሸከርካሪ ምርመራ ተቋማት ልዩ ልዩ ሰነዶችን ሰርዞ ትክክለኛ ለማስመሰል ከሚደረግ ተግባር ምን ማድረግ አለባቸው?",correct:"እራሳቸውን መቆጠብ",keywords:["ሰነድ","ማስመሰል","መቆጠብ"],reference:"ክፍል 2.5 ቁጥር 4፣ ገጽ 11"},
-        {id:8,question:"የህዝብና የከተማ ትራንስፖርት ማህበራት በማህበሩ ስር የተደራጁ ባለሀብቶች ቢሮው ባወጣው ምን ብቻ እንዲጠቀሙ ማድረግ አለባቸው?",correct:"ወቅታዊ ታሪፍ",keywords:["ታሪፍ","ክፍያ","ወቅታዊ"],reference:"ክፍል 2.7 ቁጥር 5፣ ገጽ 12"},
-        {id:9,question:"የትራንስፖርት አገልግሎት ክትትልና ኢንስፔክሽን ዳይሬክቶሪት ምን ዓይነት ቼክ ሊስቶችን ያዘጋጃል?",correct:"የውስጥ እና የውጭ ኢንስፒክሽን መገምገሚያ ቼክ ሊስቶች",keywords:["ቼክ ሊስት","ውስጥ","ውጭ"],reference:"ክፍል 2.1 ቁጥር 2፣ ገጽ 7"},
-        {id:10,question:"በኢንስፔክሽን ወቅት የሚወሰዱ አስተዳደራዊና ህጋዊ እርምጃዎችን ተቋማት እንዴት መቀበል አለባቸው?",correct:"በቅንነት መቀበልና ማስተካከል",keywords:["ቅንነት","መቀበል","ማስተካከል"],reference:"ክፍል 2.4-2.7 ቁጥር 7"]
-    };
+    const SHORT_LIST = [
+        {id:1,q:"የመመሪያው ሙሉ ርዕስ እና ቁጥር ምንድን ነው?",cor:"የትራንስፖርት አገልግሎት ክትትልና ኢንስፔክሽን የማስፈፀሚያ መመሪያ ቁጥር 009/2011",kw:["ትራንስፖርት","ኢንስፔክሽን","009/2011"],ref:"ገጽ 1፣ ክፍል 1.1"},
+        {id:2,q:"በዚህ መመሪያ መሰረት \"ህገወጥ ስምሪት\" ምን ማለት ነው?",cor:"በህዝብ፣ በከተማ፣ በውሀና በጭነት ትራንስፖርት አገልግሎት ዙሪያ የወጡ የሕግ ድንጋጌዎችን የሚጥስ ድርጊት",kw:["ህግ","ድንጋጌ","የሚጥስ"],ref:"ክፍል 1.2 ትርጓሜ #7፣ ገጽ 4"},
+        {id:3,q:"በወረዳ ላይ ቅሬታ ያቀረበ ተገልጋይ ቅሬታውን በምን ደረጃ ያቀርባል?",cor:"በመጀመሪያ ለወረዳው ፅ/ቤት ኃላፊ፣ ከዚያ ለዞን መምሪያ፣ ከዞን ለክልል ያቀርባል። የክልሉ ውሳኔ የመጨረሻ ነው",kw:["ወረዳ","ዞን","ክልል"],ref:"ክፍል 3 ቁጥር 1፣ ገጽ 13"},
+        {id:4,q:"በክልል ቢሮ ደረጃ ለተገኘ ከባድ የዲስፒሊን ግድፈት ምን እርምጃ ይወሰዳል?",cor:"የተሰጠውን የብቃት ማረጋገጫ ወይም የማህበር ፈቃድ ይሰርዛል",kw:["ፈቃድ","ማሰረዝ"],ref:"ክፍል 4.1 ቁጥር 12.1፣ ገጽ 14"},
+        {id:5,q:"የአሽከርካሪ ማሰልጠኛ ተቋማት ዋና ግዴታ ምንድን ነው? አንዱን ጥቀስ",cor:"የፌዴራል ባለስልጣንና የአብክመ ቢሮ ባወጣቸው አዋጆች፣ ደንቦች፣ መመሪያዎች መሰረት መፈጸም",kw:["አዋጆች","ደንቦች","መመሪያዎች"],ref:"ክፍል 2.4 ቁጥር 1፣ ገጽ 10"},
+        {id:6,q:"የውስጥ ኢንስፔክሽን ምን ማለት ነው?",cor:"በቢሮው ውስጥ ያሉ ዳይሬክቶሬቶች፣ ቡድኖች የሚሰጡት አገልግሎት በአሰራር መመሪያ መሰረት መሆኑን ማረጋገጥ",kw:["ውስጥ","አገልግሎት"],ref:"ክፍል 1.2 ትርጓሜ #9፣ ገጽ 4"},
+        {id:7,q:"የተሸከርካሪ ምርመራ ተቋማት ሰነዶችን ሰርዞ ለማስመሰል ከሚደረግ ተግባር ምን ማድረግ አለባቸው?",cor:"እራሳቸውን መቆጠብ",kw:["ሰነድ","ማስመሰል","መቆጠብ"],ref:"ክፍል 2.5 ቁጥር 4፣ ገጽ 11"},
+        {id:8,q:"የህዝብና የከተማ ትራንስፖርት ማህበራት ባለሀብቶች ቢሮው ባወጣው ምን ብቻ እንዲጠቀሙ ማድረግ አለባቸው?",cor:"ወቅታዊ ታሪፍ",kw:["ታሪፍ","ክፍያ"],ref:"ክፍል 2.7 ቁጥር 5፣ ገጽ 12"},
+        {id:9,q:"የትራንስፖርት አገልግሎት ክትትልና ኢንስፔክሽን ዳይሬክቶሪት ምን ዓይነት ቼክ ሊስቶችን ያዘጋጃል?",cor:"የውስጥ እና የውጭ ኢንስፒክሽን ቼክ ሊስቶች",kw:["ቼክ ሊስት","ውስጥ","ውጭ"],ref:"ክፍል 2.1 ቁጥር 2፣ ገጽ 7"},
+        {id:10,q:"በኢንስፔክሽን ወቅት የሚወሰዱ እርምጃዎችን ተቋማት እንዴት መቀበል አለባቸው?",cor:"በቅንነት መቀበልና ማስተካከል",kw:["ቅንነት","መቀበል","ማስተካከል"],ref:"ክፍል 2.4-2.7"}
+    ];
 
     // የጥያቄ ባንክ መዋቅር
     let questionBank = { mcq: [], fill: [], short: [] };
-    
-    // ጥያቄዎችን መጫን (ምንም ድግግሞሽ የለም)
-    function loadQuestions() {
-        questionBank.mcq = mcqQuestions.map(q => ({
-            id: `mcq_${q.id}`, question: q.question, options: q.options, correct: q.correct,
-            page: q.reference, section: "ክፍል", explanation: `ከመመሪያው ${q.reference} የተወሰደ`
-        }));
-        questionBank.fill = fillQuestions.map(q => ({
-            id: `fill_${q.id}`, question: q.question, correct: q.correct,
-            page: q.reference, section: "ክፍል", explanation: `ከመመሪያው ${q.reference} የተወሰደ`
-        }));
-        questionBank.short = shortQuestions.map(q => ({
-            id: `short_${q.id}`, question: q.question, correct: q.correct, keywords: q.keywords,
-            page: q.reference, section: "ክፍል", explanation: `ከመመሪያው ${q.reference} የተወሰደ`
-        }));
+    function buildQuestionBank() {
+        questionBank.mcq = MCQ_LIST.map(q => ({ id: `mcq_${q.id}`, question: q.q, options: q.opt, correct: q.cor, page: q.ref, section: "ክፍል", explanation: `ከመመሪያው ${q.ref}` }));
+        questionBank.fill = FILL_LIST.map(q => ({ id: `fill_${q.id}`, question: q.q, correct: q.cor, page: q.ref, section: "ክፍል", explanation: `ከመመሪያው ${q.ref}` }));
+        questionBank.short = SHORT_LIST.map(q => ({ id: `short_${q.id}`, question: q.q, correct: q.cor, keywords: q.kw || [q.cor], page: q.ref, section: "ክፍል", explanation: `ከመመሪያው ${q.ref}` }));
     }
-    
-    loadQuestions();
-    
-    // የተጠቃሚ ውሂብ
+    buildQuestionBank();
+
+    // የውሂብ አስተዳደር
     let exams = JSON.parse(localStorage.getItem('exams') || '[]');
     let examinees = JSON.parse(localStorage.getItem('examinees') || '[]');
     let results = JSON.parse(localStorage.getItem('results') || '[]');
     let recycleBin = JSON.parse(localStorage.getItem('recycleBin') || '[]');
-    let savedBank = JSON.parse(localStorage.getItem('questionBank'));
-    if(savedBank && savedBank.mcq && savedBank.mcq.length > 0) questionBank = savedBank;
-    else saveBank();
     
-    function saveBank(){ localStorage.setItem('questionBank',JSON.stringify(questionBank)); }
-    function saveAll(){ localStorage.setItem('exams',JSON.stringify(exams)); localStorage.setItem('examinees',JSON.stringify(examinees)); localStorage.setItem('results',JSON.stringify(results)); localStorage.setItem('recycleBin',JSON.stringify(recycleBin)); saveBank(); }
+    function saveAll() {
+        localStorage.setItem('exams', JSON.stringify(exams));
+        localStorage.setItem('examinees', JSON.stringify(examinees));
+        localStorage.setItem('results', JSON.stringify(results));
+        localStorage.setItem('recycleBin', JSON.stringify(recycleBin));
+        localStorage.setItem('questionBank', JSON.stringify(questionBank));
+    }
     
-    let currentExamForStudent=null, currentExamineeData=null, studentAnswers={}, examTimer=null, examTimeLeft=0, examQuestionsList=[];
+    // ግሎባል ተለዋዋጮች
+    let currentExamForStudent = null, currentExamineeData = null, studentAnswers = {}, examTimer = null, examTimeLeft = 0, examQuestionsList = [];
+    let editExamineeId = null;
     
-    function showToast(msg,type='success'){let t=document.createElement('div');t.className='toast';t.style.background=type==='error'?'#dc2626':'#059669';t.innerText=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),3000);}
-    function goBack(){document.getElementById('welcomeScreen').classList.remove('hidden');document.getElementById('adminLoginScreen').classList.add('hidden');document.getElementById('adminPanel').classList.add('hidden');document.getElementById('examLoginScreen').classList.add('hidden');document.getElementById('examScreen').classList.add('hidden');}
-    function logout(){goBack();}
-    function showAdminLogin(){document.getElementById('welcomeScreen').classList.add('hidden');document.getElementById('adminLoginScreen').classList.remove('hidden');document.getElementById('adminPassword').value='';}
-    function showExamLogin(){document.getElementById('welcomeScreen').classList.add('hidden');document.getElementById('examLoginScreen').classList.remove('hidden');document.getElementById('examOtp').value='';}
+    function showToast(msg, type = 'success') {
+        let t = document.createElement('div'); t.className = 'toast'; t.style.background = type === 'error' ? '#dc2626' : '#059669';
+        t.innerText = msg; document.body.appendChild(t); setTimeout(() => t.remove(), 3000);
+    }
+    function goBack() {
+        document.getElementById('welcomeScreen').classList.remove('hidden');
+        document.getElementById('adminLoginScreen').classList.add('hidden');
+        document.getElementById('adminPanel').classList.add('hidden');
+        document.getElementById('examLoginScreen').classList.add('hidden');
+        document.getElementById('examScreen').classList.add('hidden');
+        if (examTimer) clearInterval(examTimer);
+    }
+    function logout() { goBack(); }
+    function showAdminLogin() { document.getElementById('welcomeScreen').classList.add('hidden'); document.getElementById('adminLoginScreen').classList.remove('hidden'); document.getElementById('adminPassword').value = ''; }
+    function showExamLogin() { document.getElementById('welcomeScreen').classList.add('hidden'); document.getElementById('examLoginScreen').classList.remove('hidden'); document.getElementById('examOtp').value = ''; }
+    function adminLogin() { if (document.getElementById('adminPassword').value === '11133') { document.getElementById('adminLoginScreen').classList.add('hidden'); document.getElementById('adminPanel').classList.remove('hidden'); showAdminTab('dashboard', document.querySelector('#adminPanel .tab')); loadAdminData(); showToast('እንኳን ደህና መጡ አድሚን'); } else { showToast('የይለፍ ቃል ተሳስቷል!', 'error'); } }
     
-    function adminLogin(){let pwd=document.getElementById('adminPassword').value;if(pwd==='11133'){document.getElementById('adminLoginScreen').classList.add('hidden');document.getElementById('adminPanel').classList.remove('hidden');showAdminTab('dashboard',document.querySelector('#adminPanel .tab'));loadAdminData();showToast('እንኳን ደህና መጡ አድሚን');}else{showToast('የይለፍ ቃል ተሳስቷል!','error');document.getElementById('adminPassword').value='';}}
+    function showAdminTab(tab, btn) {
+        document.querySelectorAll('#adminPanel .tab').forEach(t => t.classList.remove('active')); btn.classList.add('active');
+        ['dashboard', 'create', 'bank', 'examinees', 'results', 'recycle'].forEach(t => { let el = document.getElementById(`admin${t.charAt(0).toUpperCase() + t.slice(1)}Tab`); if (el) el.classList.add('hidden'); });
+        document.getElementById(`admin${tab.charAt(0).toUpperCase() + tab.slice(1)}Tab`).classList.remove('hidden');
+        if (tab === 'dashboard') loadAdminData();
+        if (tab === 'examinees') { loadExaminees(); updateExamSelect(); }
+        if (tab === 'results') loadResults();
+        if (tab === 'recycle') loadRecycle();
+        if (tab === 'bank') loadBankUI();
+    }
     
-    function showAdminTab(tab,btn){document.querySelectorAll('#adminPanel .tab').forEach(t=>t.classList.remove('active'));btn.classList.add('active');['dashboard','create','bank','examinees','results','recycle'].forEach(t=>{let el=document.getElementById(`admin${t.charAt(0).toUpperCase()+t.slice(1)}Tab`);if(el)el.classList.add('hidden');});document.getElementById(`admin${tab.charAt(0).toUpperCase()+tab.slice(1)}Tab`).classList.remove('hidden');if(tab==='dashboard')loadAdminData();if(tab==='examinees')loadExaminees();if(tab==='results')loadResults();if(tab==='recycle')loadRecycle();if(tab==='bank')loadBankUI();}
+    function loadAdminData() {
+        let stats = { exams: exams.length, examinees: examinees.length, results: results.length, passed: results.filter(r => r.percentage >= 50).length };
+        document.getElementById('statsGrid').innerHTML = `<div class="stat-card"><h2>${stats.exams}</h2><p>ፈተናዎች</p></div><div class="stat-card"><h2>${stats.examinees}</h2><p>ተፈታኞች</p></div><div class="stat-card"><h2>${stats.results}</h2><p>ውጤቶች</p></div><div class="stat-card"><h2>${stats.passed}</h2><p>ያለፉ</p></div>`;
+        let html = '<table><thead><tr><th>ርዕስ</th><th>ጥያቄ</th><th>ጊዜ</th><th>ሁኔታ</th></tr></thead><tbody>';
+        exams.forEach(e => { html += `<tr><td>${e.title}</td><td>${e.totalQ}</td><td>${e.totalTime} ደቂቃ</td><td><span class="badge badge-success">ንቁ</span></td></tr>`; });
+        html += '</tbody></table>'; document.getElementById('examsList').innerHTML = html || '<p>ምንም ፈተና የለም</p>';
+    }
+    function updateExamSelect() { let s = document.getElementById('examSelect'); s.innerHTML = '<option value="">-- ምረጥ --</option>'; exams.forEach(e => { s.innerHTML += `<option value="${e.id}">${e.title}</option>`; }); }
     
-    function loadAdminData(){let stats={exams:exams.length,examinees:examinees.length,results:results.length,passed:results.filter(r=>r.percentage>=50).length};document.getElementById('statsGrid').innerHTML=`<div class="stat-card"><h2>${stats.exams}</h2><p>ፈተናዎች</p></div><div class="stat-card"><h2>${stats.examinees}</h2><p>ተፈታኞች</p></div><div class="stat-card"><h2>${stats.results}</h2><p>ውጤቶች</p></div><div class="stat-card"><h2>${stats.passed}</h2><p>ያለፉ</p></div>`;let html='<tr><thead><tr><th>ርዕስ</th><th>ጥያቄ</th><th>ጊዜ</th><th>ሁኔታ</th></tr></thead><tbody>';exams.forEach(e=>{html+=`<tr><td>${e.title}</td><td>${e.totalQ}</td><td>${e.totalTime} ደቂቃ</td><td><span class="badge badge-success">ንቁ</span></td></tr>`;});html+='</tbody></table>';document.getElementById('examsList').innerHTML=html||'<p>ምንም ፈተና የለም</p>';}
-    function updateExamSelect(){let s=document.getElementById('examSelect');s.innerHTML='<option value="">-- ምረጥ --</option>';exams.forEach(e=>{s.innerHTML+=`<option value="${e.id}">${e.title}</option>`;});}
+    function createExam() {
+        let title = document.getElementById('examTitle').value.trim();
+        if (!title) { showToast('ርዕስ ያስገቡ', 'error'); return; }
+        let mcqC = Math.min(30, parseInt(document.getElementById('mcqCount').value) || 10);
+        let fillC = Math.min(10, parseInt(document.getElementById('fillCount').value) || 5);
+        let shortC = Math.min(10, parseInt(document.getElementById('shortCount').value) || 5);
+        let tQ = mcqC + fillC + shortC, tTime = tQ * (parseInt(document.getElementById('timePerQ').value) || 2);
+        let shuffledMcq = [...questionBank.mcq].sort(() => 0.5 - Math.random());
+        let shuffledFill = [...questionBank.fill].sort(() => 0.5 - Math.random());
+        let shuffledShort = [...questionBank.short].sort(() => 0.5 - Math.random());
+        let exam = {
+            id: Date.now().toString(), title, createdAt: new Date().toISOString(), totalQ: tQ, totalTime: tTime,
+            mcqCount: mcqC, fillCount: fillC, shortCount: shortC,
+            mcqWeight: parseInt(document.getElementById('mcqWeight').value) || 5,
+            fillWeight: parseInt(document.getElementById('fillWeight').value) || 10,
+            shortWeight: parseInt(document.getElementById('shortWeight').value) || 15,
+            questions: { mcq: shuffledMcq.slice(0, mcqC), fill: shuffledFill.slice(0, fillC), short: shuffledShort.slice(0, shortC) }
+        };
+        exams.push(exam); saveAll(); showToast('ፈተና ተፈጥሯል!'); loadAdminData(); updateExamSelect();
+        let link = window.location.href.split('?')[0]; document.getElementById('examLinkInput').value = link; document.getElementById('newExamLink').classList.remove('hidden');
+    }
+    function copyLink() { let i = document.getElementById('examLinkInput'); i.select(); document.execCommand('copy'); showToast('ሊንክ ተቅዷል'); }
     
-    function createExam(){let title=document.getElementById('examTitle').value.trim();if(!title){showToast('ርዕስ ያስገቡ','error');return;}let mcqC=Math.min(30,parseInt(document.getElementById('mcqCount').value)||10);let fillC=Math.min(10,parseInt(document.getElementById('fillCount').value)||5);let shortC=Math.min(10,parseInt(document.getElementById('shortCount').value)||5);let tQ=mcqC+fillC+shortC,tTime=tQ*(parseInt(document.getElementById('timePerQ').value)||2);let shuffledMcq=[...questionBank.mcq].sort(()=>0.5-Math.random());let shuffledFill=[...questionBank.fill].sort(()=>0.5-Math.random());let shuffledShort=[...questionBank.short].sort(()=>0.5-Math.random());let exam={id:Date.now().toString(),title,createdAt:new Date().toISOString(),totalQ:tQ,totalTime:tTime,mcqCount:mcqC,fillCount:fillC,shortCount:shortC,mcqWeight:parseInt(document.getElementById('mcqWeight').value)||5,fillWeight:parseInt(document.getElementById('fillWeight').value)||10,shortWeight:parseInt(document.getElementById('shortWeight').value)||15,questions:{mcq:shuffledMcq.slice(0,mcqC),fill:shuffledFill.slice(0,fillC),short:shuffledShort.slice(0,shortC)}};exams.push(exam);saveAll();showToast('ፈተና ተፈጥሯል!');loadAdminData();updateExamSelect();let link=window.location.href.split('?')[0];document.getElementById('examLinkInput').value=link;document.getElementById('newExamLink').classList.remove('hidden');}
-    function copyLink(){let i=document.getElementById('examLinkInput');i.select();document.execCommand('copy');showToast('ሊንክ ተቅዷል');}
+    // OTP አመንጪ
+    function generateOTP() {
+        let name = document.getElementById('examineeName').value.trim();
+        let examId = document.getElementById('examSelect').value;
+        if (!name || !examId) { showToast('ስም እና ፈተና ይምረጡ', 'error'); return; }
+        let exam = exams.find(e => e.id === examId);
+        if (!exam) { showToast('ፈተና አልተገኘም', 'error'); return; }
+        let otp = Math.floor(1000 + Math.random() * 9000).toString();
+        examinees.push({ id: Date.now().toString(), name, examId, examTitle: exam.title, otp, used: false, createdAt: new Date().toISOString() });
+        saveAll();
+        document.getElementById('otpResult').innerHTML = `<div style="background:#d1fae5;padding:15px;border-radius:12px;margin-top:15px;"><strong>${name}</strong><br>🔑 OTP: <span style="font-size:2rem;font-weight:bold;letter-spacing:5px;">${otp}</span><br><button class="btn btn-primary" onclick="navigator.clipboard.writeText('${otp}')">📋 ቅዳ</button></div>`;
+        loadExaminees(); showToast('OTP ተፈጥሯል'); document.getElementById('examineeName').value = '';
+    }
     
-    function generateOTP(){let name=document.getElementById('examineeName').value.trim(),examId=document.getElementById('examSelect').value;if(!name||!examId){showToast('ስም እና ፈተና ይምረጡ','error');return;}let otp=Math.floor(1000+Math.random()*9000).toString();let exam=exams.find(e=>e.id===examId);examinees.push({id:Date.now().toString(),name,examId,examTitle:exam.title,otp,used:false,createdAt:new Date().toISOString()});saveAll();document.getElementById('otpResult').innerHTML=`<div style="background:#d1fae5;padding:15px;border-radius:12px;margin-top:15px;"><strong>${name}</strong><br>🔑 OTP: <span style="font-size:2rem;font-weight:bold;letter-spacing:5px;">${otp}</span><br><button class="btn btn-primary" onclick="navigator.clipboard.writeText('${otp}')">📋 ቅዳ</button></div>`;loadExaminees();showToast('OTP ተፈጥሯል');}
-    function loadExaminees(){let html='<table><thead><tr><th>ስም</th><th>ፈተና</th><th>OTP</th><th>ሁኔታ</th></tr></thead><tbody>';examinees.forEach(e=>{html+=`<tr><td>${e.name}</td><td>${e.examTitle}</td><td><code>${e.otp}</code></td><td>${e.used?'<span class="badge badge-danger">ተጠቅሟል</span>':'<span class="badge badge-success">ንቁ</span>'}</td></tr>`;});html+='</tbody></table>';document.getElementById('examineesList').innerHTML=html||'<p>ምንም የለም</p>';}
-    function filterExaminees(){let s=document.getElementById('searchExaminee').value.toLowerCase();let f=examinees.filter(e=>e.name.toLowerCase().includes(s));let html='<table><thead><tr><th>ስም</th><th>ፈተና</th><th>OTP</th><th>ሁኔታ</th></table></thead><tbody>';f.forEach(e=>{html+=`<tr><td>${e.name}</td><td>${e.examTitle}</td><td><code>${e.otp}</code></td><td>${e.used?'<span class="badge badge-danger">ተጠቅሟል</span>':'<span class="badge badge-success">ንቁ</span>'}</td></tr>`;});html+='</tbody></tr>';document.getElementById('examineesList').innerHTML=html;}
-    function loadResults(){let html='<table><thead><tr><th>ተፈታኝ</th><th>ፈተና</th><th>ውጤት</th><th>ቀን</th><th>ዝርዝር</th></tr></thead><tbody>';results.forEach(r=>{html+=`<tr><td>${r.studentName}</td><td>${r.examTitle}</td><td><span class="badge ${r.percentage>=50?'badge-success':'badge-danger'}">${r.percentage.toFixed(1)}%</span></td><td>${new Date(r.submittedAt).toLocaleDateString()}</td><td><details><summary>👁️</summary><div style="max-height:150px;overflow:auto;">${r.detailsHtml||'ዝርዝር የለም'}</div></details></td></tr>`;});html+='</tbody><tr>';document.getElementById('resultsList').innerHTML=html||'<p>ምንም ውጤት የለም</p>';}
-    function filterResults(){let s=document.getElementById('searchResult').value.toLowerCase();let f=results.filter(r=>r.studentName.toLowerCase().includes(s));let html='</table><thead><tr><th>ተፈታኝ</th><th>ፈተና</th><th>ውጤት</th><th>ቀን</th></tr></thead><tbody>';f.forEach(r=>{html+=`<tr><td>${r.studentName}</td><td>${r.examTitle}</td><td><span class="badge ${r.percentage>=50?'badge-success':'badge-danger'}">${r.percentage.toFixed(1)}%</span></td><td>${new Date(r.submittedAt).toLocaleDateString()}</td></tr>`;});html+='</tbody></table>';document.getElementById('resultsList').innerHTML=html;}
-    function loadRecycle(){let html='<table><thead><tr><th>ስም</th><th>ውጤት</th><th>የተጠፋ</th><th>ድርጊት</th></tr></thead><tbody>';recycleBin.forEach(r=>{html+=`<tr><td>${r.studentName}</td><td>${r.percentage.toFixed(1)}%</td><td>${r.deletedAt}</td><td><button class="btn btn-success btn-sm" onclick="restoreResult('${r.id}')">♻️</button></td></tr>`;});html+='</tbody></table>';document.getElementById('recycleList').innerHTML=html||'<p>ባዶ ነው</p>';}
-    function restoreResult(id){let item=recycleBin.find(r=>r.id===id);if(item){delete item.deletedAt;results.push(item);recycleBin=recycleBin.filter(r=>r.id!==id);saveAll();loadResults();loadRecycle();showToast('ተመልሷል');}}
-    function restoreAll(){recycleBin.forEach(r=>{delete r.deletedAt;results.push(r);});recycleBin=[];saveAll();loadResults();loadRecycle();showToast('ሁሉም ተመልሰዋል');}
-    function emptyRecycle(){if(confirm('ሙሉ ማጥፋት ቋሚ ነው!')){recycleBin=[];saveAll();loadRecycle();showToast('ሪሳይክል ተጠራግሟል');}}
+    // ተፈታኞች ዝርዝር (ከአርትዕ እና ቼክቦክስ ጋር)
+    function loadExaminees() {
+        if (examinees.length === 0) { document.getElementById('examineesList').innerHTML = '<p>ምንም ተፈታኝ የለም</p>'; return; }
+        let html = '<table><thead><tr><th><input type="checkbox" id="selectAllExaminees" onchange="toggleSelectAllExaminees(this)"></th><th>ስም</th><th>ፈተና</th><th>OTP</th><th>ሁኔታ</th><th>ድርጊት</th></tr></thead><tbody>';
+        examinees.forEach(e => {
+            html += `<tr id="examinee_row_${e.id}">
+                <td><input type="checkbox" class="examinee_check" value="${e.id}"></td>
+                <td><span id="name_${e.id}">${e.name}</span><input type="text" id="edit_name_${e.id}" value="${e.name}" style="display:none;width:100%;"></td>
+                <td>${e.examTitle}</td>
+                <td><code>${e.otp}</code></td>
+                <td>${e.used ? '<span class="badge badge-danger">ተጠቅሟል</span>' : '<span class="badge badge-success">ንቁ</span>'}</td>
+                <td class="action-btns"><button class="btn btn-warning btn-sm" onclick="editExaminee('${e.id}')">✏️ አርትዕ</button><button class="btn btn-danger btn-sm" onclick="deleteExaminee('${e.id}')">🗑️ አጥፋ</button></td>
+            </tr>`;
+        });
+        html += '</tbody></table>'; document.getElementById('examineesList').innerHTML = html;
+    }
     
-    function loadBankUI(){document.getElementById('bankStats').innerHTML=`<p><strong>📊 ጥያቄ ባንክ ማጠቃለያ</strong><br>✅ ምርጫ: ${questionBank.mcq.length} (30ቱ ልዩ ልዩ)<br>📝 ዳሽ ሙላ: ${questionBank.fill.length} (10ቱ ልዩ ልዩ)<br>✍️ አጭር መልስ: ${questionBank.short.length} (10ቱ ልዩ ልዩ)</p>`;let html='';[...questionBank.mcq,...questionBank.fill,...questionBank.short].forEach(q=>{html+=`<div style="border-bottom:1px solid #ddd;padding:8px;"><strong>${q.question.substring(0,100)}</strong><br><span style="font-size:0.8rem;color:#666;">📖 ${q.page||'ማጣቀሻ'}</span></div>`;});document.getElementById('bankList').innerHTML=html;}
-    function addQuestion(){let type=document.getElementById('qType').value,text=document.getElementById('newQuestion').value.trim();if(!text){showToast('ጥያቄ ያስገቡ','error');return;}let newId=type+Date.now();let newQ={id:newId,question:text,page:document.getElementById('refPage').value||'አዲስ ጥያቄ',section:'ክፍል',explanation:'በአድሚን ተጨምሯል'};if(type==='mcq'){let opts=[document.getElementById('optA').value,document.getElementById('optB').value,document.getElementById('optC').value,document.getElementById('optD').value];if(opts.some(o=>!o)){showToast('4ቱም አማራጮች ይሙሉ','error');return;}newQ.options=opts;newQ.correct=parseInt(document.getElementById('correctAnswer').value)||0;}else{newQ.correct=document.getElementById('correctAnswer').value.trim();if(type==='short')newQ.keywords=[newQ.correct];}questionBank[type].push(newQ);saveBank();loadBankUI();showToast('ጥያቄ ተጨምሯል');}
-    function exportQuestions(){let blob=new Blob([JSON.stringify(questionBank,null,2)],{type:'application/json'});let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`questions_${new Date().toISOString().slice(0,19)}.json`;a.click();showToast('ተቀምጧል');}
+    function toggleSelectAllExaminees(cb) { document.querySelectorAll('.examinee_check').forEach(c => c.checked = cb.checked); }
+    function editExaminee(id) {
+        let span = document.getElementById(`name_${id}`); let input = document.getElementById(`edit_name_${id}`);
+        if (span.style.display === 'none') {
+            let newName = input.value.trim();
+            if (newName) {
+                let ex = examinees.find(e => e.id === id);
+                if (ex) ex.name = newName;
+                saveAll();
+                span.innerText = newName;
+                showToast('ስም ተስተካክሏል');
+            }
+            span.style.display = 'inline'; input.style.display = 'none';
+        } else {
+            span.style.display = 'none'; input.style.display = 'inline'; input.focus();
+        }
+    }
+    function deleteExaminee(id) {
+        if (confirm('ይህን ተፈታኝ ወደ ሪሳይክል ቢን መላክ ይፈልጋሉ?')) {
+            let ex = examinees.find(e => e.id === id);
+            if (ex) { recycleBin.push({ ...ex, deletedAt: new Date().toLocaleString(), type: 'examinee' }); examinees = examinees.filter(e => e.id !== id); saveAll(); loadExaminees(); showToast('ወደ ሪሳይክል ተልኳል'); }
+        }
+    }
+    function bulkDeleteExaminees() {
+        let selected = [...document.querySelectorAll('.examinee_check:checked')].map(c => c.value);
+        if (selected.length === 0) { showToast('እባክዎ ቢያንስ አንድ ተፈታኝ ይምረጡ', 'error'); return; }
+        if (confirm(`${selected.length} ተፈታኝ(ች)ን ወደ ሪሳይክል መላክ ይፈልጋሉ?`)) {
+            selected.forEach(id => { let ex = examinees.find(e => e.id === id); if (ex) { recycleBin.push({ ...ex, deletedAt: new Date().toLocaleString(), type: 'examinee' }); examinees = examinees.filter(e => e.id !== id); } });
+            saveAll(); loadExaminees(); showToast(`${selected.length} ተፈታኝ(ች) ወደ ሪሳይክል ተልከዋል`);
+        }
+    }
+    function editSelectedExaminee() {
+        let selected = [...document.querySelectorAll('.examinee_check:checked')];
+        if (selected.length !== 1) { showToast('እባክዎ አንድ ተፈታኝ ብቻ ይምረጡ ለማርትዕ', 'error'); return; }
+        editExaminee(selected[0].value);
+    }
     
-    async function verifyOTP(){let otp=document.getElementById('examOtp').value.trim();let ex=examinees.find(e=>e.otp===otp&&!e.used);if(!ex){showToast('የማይሰራ OTP!','error');document.getElementById('examOtp').value='';return;}let exam=exams.find(e=>e.id===ex.examId);if(!exam){showToast('ፈተና አልተገኘም','error');return;}currentExamineeData=ex;currentExamForStudent=exam;if(confirm(`📋 ፈተና: ${exam.title}\n❓ ጥያቄዎች: ${exam.totalQ}\n⚖️ አጠቃላይ ነጥብ: ${(exam.mcqCount*exam.mcqWeight)+(exam.fillCount*exam.fillWeight)+(exam.shortCount*exam.shortWeight)}\n⏰ ጊዜ: ${exam.totalTime} ደቂቃ\n\nመጀመር ይፈልጋሉ?`)){startExamForStudent();}}
-    function startExamForStudent(){let idx=examinees.findIndex(e=>e.id===currentExamineeData.id);if(idx!==-1)examinees[idx].used=true;saveAll();buildStudentQuestions();examTimeLeft=currentExamForStudent.totalTime*60;document.getElementById('examLoginScreen').classList.add('hidden');document.getElementById('examScreen').classList.remove('hidden');renderStudentExam();startStudentTimer();}
-    function buildStudentQuestions(){examQuestionsList=[];let qNum=1;currentExamForStudent.questions.mcq.forEach(q=>{examQuestionsList.push({...q,type:'mcq',num:qNum++,weight:currentExamForStudent.mcqWeight});});currentExamForStudent.questions.fill.forEach(q=>{examQuestionsList.push({...q,type:'fill',num:qNum++,weight:currentExamForStudent.fillWeight});});currentExamForStudent.questions.short.forEach(q=>{examQuestionsList.push({...q,type:'short',num:qNum++,weight:currentExamForStudent.shortWeight});});}
-    function renderStudentExam(){let html='';examQuestionsList.forEach(q=>{let saved=studentAnswers[q.num];html+=`<div style="margin-bottom:25px;padding:15px;border-bottom:1px solid #ddd;"><h4>${q.num}. ${q.question} <span style="color:#059669;">(${q.weight} ነጥብ)</span></h4>`;if(q.type==='mcq'){html+=`<div class="options">`;let letters=['ሀ','ለ','ሐ','መ'];q.options.forEach((opt,i)=>{html+=`<div class="option ${saved===i?'selected':''}" onclick="selectStudentOption(${q.num},${i},this)"><input type="radio" name="q-${q.num}" ${saved===i?'checked':''}> <label>${letters[i]}) ${opt}</label></div>`;});html+=`</div>`;}else if(q.type==='fill'){html+=`<input type="text" class="fill-input" placeholder="መልስዎን ይጻፉ..." value="${saved||''}" oninput="saveStudentAnswer(${q.num},this.value)">`;}else{html+=`<textarea rows="3" class="short-textarea" placeholder="መልስዎን በዝርዝር ይጻፉ..." oninput="saveStudentAnswer(${q.num},this.value)">${saved||''}</textarea>`;}html+=`</div>`;});document.getElementById('questionsContainer').innerHTML=html;updateStudentProgress();}
-    function selectStudentOption(qNum,idx,el){studentAnswers[qNum]=idx;let parent=el.closest('.options');if(parent)parent.querySelectorAll('.option').forEach(o=>o.classList.remove('selected'));el.classList.add('selected');if(el.querySelector('input'))el.querySelector('input').checked=true;updateStudentProgress();}
-    function saveStudentAnswer(qNum,val){studentAnswers[qNum]=val;updateStudentProgress();}
-    function updateStudentProgress(){let answered=Object.keys(studentAnswers).length,total=examQuestionsList.length;let percent=total?(answered/total)*100:0;let pf=document.getElementById('progressFill');if(pf)pf.style.width=percent+'%';}
-    function startStudentTimer(){updateStudentTimer();examTimer=setInterval(()=>{examTimeLeft--;updateStudentTimer();if(examTimeLeft<=0){clearInterval(examTimer);showToast('⏰ ጊዜ አልቋል! ፈተና ተልኳል');submitExam();}},1000);}
-    function updateStudentTimer(){let mins=Math.floor(examTimeLeft/60),secs=examTimeLeft%60;let td=document.getElementById('timerDisplay');if(td){td.innerHTML=`⏱️ ${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;if(examTimeLeft<=60)td.style.color='#dc2626';if(examTimeLeft<=30)td.style.animation='pulse 0.5s infinite';}}
-    function submitExam(){if(examTimer)clearInterval(examTimer);let totalScore=0,maxScore=0,detailsHtml='';for(let q of examQuestionsList){let user=studentAnswers[q.num];let isCorrect=false,userText='',correctText='';if(q.type==='mcq'){correctText=q.options[q.correct];userText=(user!==undefined)?q.options[user]:'አልተመለሰም';isCorrect=(user===q.correct);}else if(q.type==='fill'){correctText=q.correct;userText=user||'አልተመለሰም';isCorrect=(user&&user.trim().toLowerCase()===q.correct.trim().toLowerCase());}else{correctText=q.correct;userText=user||'አልተመለሰም';if(user&&q.keywords){let match=q.keywords.filter(kw=>user.toLowerCase().includes(kw.toLowerCase())).length;isCorrect=match/q.keywords.length>=0.5;}}if(isCorrect)totalScore+=q.weight;maxScore+=q.weight;let badge=isCorrect?'✓ ትክክል':'✗ ተሳስተዋል';detailsHtml+=`<div style="margin-bottom:15px;padding:10px;background:#f7fafc;border-radius:10px;"><strong>${q.num}. ${q.question}</strong><br>📝 መልስዎ: ${userText}<br>✅ ትክክለኛ መልስ: ${correctText}<br>${badge}<br>📖 ማጣቀሻ: ${q.page||'ገጽ አልተገለጸም'}<br>💡 ማብራሪያ: ${q.explanation||''}</div>`;}let percentage=(totalScore/maxScore)*100;let result={id:Date.now().toString(),studentName:currentExamineeData.name,examId:currentExamForStudent.id,examTitle:currentExamForStudent.title,score:totalScore,maxScore,percentage,detailsHtml,submittedAt:new Date().toISOString()};results.push(result);saveAll();document.getElementById('examScreen').classList.add('hidden');let passed=percentage>=50;document.getElementById('examLoginScreen').innerHTML=`<div class="login-box"><h2 style="color:${passed?'#059669':'#dc2626'}">${passed?'🎉 አልፈዋል!':'📚 አላለፉም!'}</h2><div style="font-size:3rem;text-align:center;">${percentage.toFixed(1)}%</div><p style="text-align:center;">${totalScore}/${maxScore} ነጥብ</p><div style="max-height:400px;overflow:auto;margin:20px 0;">${detailsHtml}</div><button class="btn btn-primary" onclick="goBack()">🔁 ቀጥሎ</button></div>`;document.getElementById('examLoginScreen').classList.remove('hidden');loadResults();}
+    // ውጤቶች
+    function loadResults() {
+        if (results.length === 0) { document.getElementById('resultsList').innerHTML = '<p>ምንም ውጤት የለም</p>'; return; }
+        let html = '<table><thead><tr><th>ተፈታኝ</th><th>ፈተና</th><th>ውጤት</th><th>ቀን</th><th>ዝርዝር</th></tr></thead><tbody>';
+        results.forEach(r => {
+            html += `<tr><td>${r.studentName}</td><td>${r.examTitle}</td><td><span class="badge ${r.percentage >= 50 ? 'badge-success' : 'badge-danger'}">${r.percentage.toFixed(1)}%</span></td><td>${new Date(r.submittedAt).toLocaleDateString()}</td><td><details><summary>👁️</summary><div style="max-height:150px;overflow:auto;">${r.detailsHtml || 'ዝርዝር የለም'}</div></details></td></tr>`;
+        });
+        html += '</tbody></table>'; document.getElementById('resultsList').innerHTML = html;
+    }
+    function filterResults() {
+        let s = document.getElementById('searchResult').value.toLowerCase();
+        let filtered = results.filter(r => r.studentName.toLowerCase().includes(s));
+        let html = '<table><thead><tr><th>ተፈታኝ</th><th>ፈተና</th><th>ውጤት</th><th>ቀን</th></tr></thead><tbody>';
+        filtered.forEach(r => { html += `<tr><td>${r.studentName}</td><td>${r.examTitle}</td><td><span class="badge ${r.percentage >= 50 ? 'badge-success' : 'badge-danger'}">${r.percentage.toFixed(1)}%</span></td><td>${new Date(r.submittedAt).toLocaleDateString()}</td></tr>`; });
+        html += '</tbody></table>'; document.getElementById('resultsList').innerHTML = html;
+    }
     
-    loadAdminData();updateExamSelect();
+    // ሪሳይክል ቢን
+    function loadRecycle() {
+        if (recycleBin.length === 0) { document.getElementById('recycleList').innerHTML = '<p>ሪሳይክል ቢን ባዶ ነው</p>'; return; }
+        let html = '<table><thead><tr><th>ስም</th><th>ዓይነት</th><th>ውጤት/OTP</th><th>የተጠፋበት</th><th>ድርጊት</th></tr></thead><tbody>';
+        recycleBin.forEach(r => {
+            let detail = r.percentage ? `${r.percentage.toFixed(1)}%` : `OTP: ${r.otp}`;
+            html += `<tr><td>${r.name || r.studentName}</td><td>${r.type === 'examinee' ? 'ተፈታኝ' : 'ውጤት'}</td><td>${detail}</td><td>${r.deletedAt}</td><td><button class="btn btn-success btn-sm" onclick="restoreFromRecycle('${r.id}')">♻️ መልስ</button><button class="btn btn-danger btn-sm" onclick="permanentDeleteFromRecycle('${r.id}')">🗑️ በቋሚ አጥፋ</button></td></tr>`;
+        });
+        html += '</tbody></table>'; document.getElementById('recycleList').innerHTML = html;
+    }
+    function restoreFromRecycle(id) {
+        let item = recycleBin.find(r => r.id === id);
+        if (item) {
+            if (item.percentage !== undefined) results.push(item);
+            else if (item.otp !== undefined) examinees.push(item);
+            recycleBin = recycleBin.filter(r => r.id !== id);
+            saveAll(); loadRecycle(); loadExaminees(); loadResults(); showToast('ተመልሷል');
+        }
+    }
+    function restoreAllFromRecycle() {
+        recycleBin.forEach(r => { if (r.percentage !== undefined) results.push(r); else if (r.otp !== undefined) examinees.push(r); });
+        recycleBin = []; saveAll(); loadRecycle(); loadExaminees(); loadResults(); showToast('ሁሉም ተመልሰዋል');
+    }
+    function permanentDeleteFromRecycle(id) { if (confirm('በቋሚነት ማጥፋት ይፈልጋሉ? ይህ ድርጊት ሊመለስ አይችልም!')) { recycleBin = recycleBin.filter(r => r.id !== id); saveAll(); loadRecycle(); showToast('በቋሚነት ተጥፏል'); } }
+    function emptyRecycleBin() { if (confirm('ሙሉ ሪሳይክል ቢን ማጥፋት ይፈልጋሉ? ቋሚ ነው!')) { recycleBin = []; saveAll(); loadRecycle(); showToast('ሪሳይክል ቢን ተጠራግሟል'); } }
+    
+    // ጥያቄ ባንክ ማሳያ
+    function loadBankUI() {
+        document.getElementById('bankStats').innerHTML = `<p><strong>📊 ጥያቄ ባንክ</strong><br>✅ ምርጫ: ${questionBank.mcq.length} (30)<br>📝 ዳሽ ሙላ: ${questionBank.fill.length} (10)<br>✍️ አጭር መልስ: ${questionBank.short.length} (10)</p>`;
+        let html = ''; [...questionBank.mcq, ...questionBank.fill, ...questionBank.short].forEach(q => { html += `<div style="border-bottom:1px solid #ddd;padding:8px;"><strong>${q.question.substring(0,100)}</strong><br><span style="font-size:0.8rem;color:#666;">📖 ${q.page || 'ማጣቀሻ'}</span></div>`; });
+        document.getElementById('bankList').innerHTML = html;
+    }
+    
+    // ተፈታኝ OTP ማረጋገጫ
+    async function verifyOTP() {
+        let otp = document.getElementById('examOtp').value.trim();
+        let ex = examinees.find(e => e.otp === otp && !e.used);
+        if (!ex) { showToast('የማይሰራ OTP!', 'error'); document.getElementById('examOtp').value = ''; return; }
+        let exam = exams.find(e => e.id === ex.examId);
+        if (!exam) { showToast('ፈተና አልተገኘም', 'error'); return; }
+        currentExamineeData = ex; currentExamForStudent = exam;
+        if (confirm(`📋 ፈተና: ${exam.title}\n❓ ጥያቄዎች: ${exam.totalQ}\n⏰ ጊዜ: ${exam.totalTime} ደቂቃ\n\nመጀመር ይፈልጋሉ?`)) startExamForStudent();
+    }
+    function startExamForStudent() {
+        let idx = examinees.findIndex(e => e.id === currentExamineeData.id); if (idx !== -1) examinees[idx].used = true; saveAll();
+        buildStudentQuestions(); examTimeLeft = currentExamForStudent.totalTime * 60;
+        document.getElementById('examLoginScreen').classList.add('hidden'); document.getElementById('examScreen').classList.remove('hidden');
+        renderStudentExam(); startStudentTimer();
+    }
+    function buildStudentQuestions() {
+        examQuestionsList = []; let qNum = 1;
+        currentExamForStudent.questions.mcq.forEach(q => { examQuestionsList.push({ ...q, type: 'mcq', num: qNum++, weight: currentExamForStudent.mcqWeight }); });
+        currentExamForStudent.questions.fill.forEach(q => { examQuestionsList.push({ ...q, type: 'fill', num: qNum++, weight: currentExamForStudent.fillWeight }); });
+        currentExamForStudent.questions.short.forEach(q => { examQuestionsList.push({ ...q, type: 'short', num: qNum++, weight: currentExamForStudent.shortWeight }); });
+    }
+    function renderStudentExam() {
+        let html = ''; examQuestionsList.forEach(q => { let saved = studentAnswers[q.num];
+            html += `<div style="margin-bottom:25px;padding:15px;border-bottom:1px solid #ddd;"><h4>${q.num}. ${q.question} <span style="color:#059669;">(${q.weight} ነጥብ)</span></h4>`;
+            if (q.type === 'mcq') {
+                html += `<div class="options">`; let letters = ['ሀ', 'ለ', 'ሐ', 'መ'];
+                q.options.forEach((opt, i) => { html += `<div class="option ${saved === i ? 'selected' : ''}" onclick="selectStudentOption(${q.num},${i},this)"><input type="radio" name="q-${q.num}" ${saved === i ? 'checked' : ''}> <label>${letters[i]}) ${opt}</label></div>`; });
+                html += `</div>`;
+            } else if (q.type === 'fill') html += `<input type="text" class="fill-input" placeholder="መልስዎን ይጻፉ..." value="${saved || ''}" oninput="saveStudentAnswer(${q.num},this.value)">`;
+            else html += `<textarea rows="3" class="short-textarea" placeholder="መልስዎን በዝርዝር ይጻፉ..." oninput="saveStudentAnswer(${q.num},this.value)">${saved || ''}</textarea>`;
+            html += `</div>`;
+        });
+        document.getElementById('questionsContainer').innerHTML = html; updateStudentProgress();
+    }
+    function selectStudentOption(qNum, idx, el) { studentAnswers[qNum] = idx; let parent = el.closest('.options'); if (parent) parent.querySelectorAll('.option').forEach(o => o.classList.remove('selected')); el.classList.add('selected'); if (el.querySelector('input')) el.querySelector('input').checked = true; updateStudentProgress(); }
+    function saveStudentAnswer(qNum, val) { studentAnswers[qNum] = val; updateStudentProgress(); }
+    function updateStudentProgress() { let answered = Object.keys(studentAnswers).length, total = examQuestionsList.length, percent = total ? (answered / total) * 100 : 0; let pf = document.getElementById('progressFill'); if (pf) pf.style.width = percent + '%'; }
+    function startStudentTimer() { updateStudentTimer(); examTimer = setInterval(() => { examTimeLeft--; updateStudentTimer(); if (examTimeLeft <= 0) { clearInterval(examTimer); showToast('⏰ ጊዜ አልቋል! ፈተና ተልኳል'); submitExam(); } }, 1000); }
+    function updateStudentTimer() { let mins = Math.floor(examTimeLeft / 60), secs = examTimeLeft % 60; let td = document.getElementById('timerDisplay'); if (td) { td.innerHTML = `⏱️ ${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`; if (examTimeLeft <= 60) td.style.color = '#dc2626'; } }
+    function submitExam() {
+        if (examTimer) clearInterval(examTimer);
+        let totalScore = 0, maxScore = 0, detailsHtml = '';
+        for (let q of examQuestionsList) {
+            let user = studentAnswers[q.num]; let isCorrect = false, userText = '', correctText = '';
+            if (q.type === 'mcq') { correctText = q.options[q.correct]; userText = (user !== undefined) ? q.options[user] : 'አልተመለሰም'; isCorrect = (user === q.correct); }
+            else if (q.type === 'fill') { correctText = q.correct; userText = user || 'አልተመለሰም'; isCorrect = (user && user.trim().toLowerCase() === q.correct.trim().toLowerCase()); }
+            else { correctText = q.correct; userText = user || 'አልተመለሰም'; if (user && q.keywords) { let match = q.keywords.filter(kw => user.toLowerCase().includes(kw.toLowerCase())).length; isCorrect = match / q.keywords.length >= 0.5; } }
+            if (isCorrect) totalScore += q.weight; maxScore += q.weight;
+            detailsHtml += `<div style="margin-bottom:15px;padding:10px;background:#f7fafc;border-radius:10px;"><strong>${q.num}. ${q.question}</strong><br>📝 መልስዎ: ${userText}<br>✅ ትክክለኛ መልስ: ${correctText}<br>${isCorrect ? '✓ ትክክል' : '✗ ተሳስተዋል'}<br>📖 ማጣቀሻ: ${q.page || 'ገጽ አልተገለጸም'}<br>💡 ማብራሪያ: ${q.explanation || ''}</div>`;
+        }
+        let percentage = (totalScore / maxScore) * 100;
+        let result = { id: Date.now().toString(), studentName: currentExamineeData.name, examId: currentExamForStudent.id, examTitle: currentExamForStudent.title, score: totalScore, maxScore, percentage, detailsHtml, submittedAt: new Date().toISOString() };
+        results.push(result); saveAll();
+        document.getElementById('examScreen').classList.add('hidden');
+        let passed = percentage >= 50;
+        document.getElementById('examLoginScreen').innerHTML = `<div class="login-box"><h2 style="color:${passed ? '#059669' : '#dc2626'}">${passed ? '🎉 አልፈዋል!' : '📚 አላለፉም!'}</h2><div style="font-size:3rem;text-align:center;">${percentage.toFixed(1)}%</div><p style="text-align:center;">${totalScore}/${maxScore} ነጥብ</p><div style="max-height:400px;overflow:auto;margin:20px 0;">${detailsHtml}</div><button class="btn btn-primary btn-block" onclick="goBack()">🔁 ቀጥሎ</button></div>`;
+        document.getElementById('examLoginScreen').classList.remove('hidden'); loadResults();
+    }
+    
+    loadAdminData(); updateExamSelect();
 </script>
 </body>
 </html>
